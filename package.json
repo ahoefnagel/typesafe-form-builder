@@ -1,0 +1,23 @@
+{
+  "name": "typesafe-form-builder",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc main.ts --outdir build",
+    "development": "tsc main.ts --watch --outdir build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ahoefnagel/typesafe-form-builder.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ahoefnagel/typesafe-form-builder/issues"
+  },
+  "homepage": "https://github.com/ahoefnagel/typesafe-form-builder#readme",
+  "dependencies": {
+    "typescript": "^4.2.3"
+  }
+}
