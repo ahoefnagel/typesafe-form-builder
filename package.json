@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "tsc main.ts --outdir build",
-    "development": "tsc main.ts --watch --outdir build"
+    "build": "tsc main.tsx --outdir build",
+    "development": "tsc main.tsx --watch --outdir build"
   },
   "repository": {
     "type": "git",
