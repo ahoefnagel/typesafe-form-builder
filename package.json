@@ -11,7 +11,7 @@
     "type": "git",
     "url": "git+https://github.com/ahoefnagel/typesafe-form-builder.git"
   },
-  "author": "",
+  "author": "Albert Hoefnagel, Guan Hao Wu",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/ahoefnagel/typesafe-form-builder/issues"
