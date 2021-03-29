@@ -1,4 +1,7 @@
+// 
+// Entities
 interface Student {
+    kind: "Student";
     name: string;
     surname: string;
     grades: Grades[];
@@ -6,54 +9,28 @@ interface Student {
 }
 
 interface Course {
+    kind: "Course";
     name: string;
     studyPoints: number;
     lectures: Lecture[];
 }
 
 interface Grades {
+    kind: "Grades";
     grade: number;
     course: Course;
 }
 
 interface Lecture {
+    kind: "Lecture";
     title: string;
-    topic: string; 
+    topic: string;
 }
 
-interface Renderer {
+type Entity = Student | Course | Grades | Lecture;
+
+// Renderer
+interface Rendered {
     student: Student[];
     courses: Course[];
 }
-
-/** 
- * Renderer< { <Eindigt niet?
-  Student:[
-    {
-      Name:string,
-      Surname:string,
-      Grades:[
-        {
-          Grade:number,
-          CourseId:number
-        }
-      ]
-    }
-  ],
-  Course:[
-    Name:string,
-    StudyPoints:number,
-    Lectures:[
-      {
-        Title:string,
-        Topic:string
-      }
-    ]
-  ]>
- *
- */
-
-
-
-
-
