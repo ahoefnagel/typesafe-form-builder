@@ -41,8 +41,9 @@ const addPropToObject = function<Prop extends string, A extends Record<string, a
 
 // TODO: Hier zitten we vast:
 // TODO: Het nieuwe prop moet een voor javascript en typescript geldige waarde krijgen.
-const addPropFromSourceToObject = function<Prop extends keyof SourceType, A extends Record<string, any>, SourceType >(prop: Prop, object: A): A & Record<Prop, SourceType[Prop]> {
+// const addPropFromSourceToObject = function<Prop extends keyof SourceType, A extends Record<string, any>, SourceType >(prop: Prop, object: A): A & Record<Prop, SourceType[Prop]> {
 // const addPropFromSourceToObject = function<Prop extends string, A extends Record<string, any>, SourceType>(prop: Prop, object: A): A & Record<Prop, SourceType[Prop]> {
+const addPropFromSourceToObject = function<Prop extends string & keyof SourceType, A extends Record<string, any>, SourceType >(prop: Prop, object: A): A & Record<Prop, SourceType[Prop]> {
         return {
         ...object,
         [prop]: null
