@@ -17,7 +17,7 @@ export type Fun<a, b> = {
  * @param f The function to be wrapped. Must take 0 or 1 argument.
  * @returns A new function object containing `f` and the added convenience functions.
  */
-const fun = <a, b>(f: (input: a) => b) : Fun<a, b> =>
+export const fun = <a, b>(f: (input: a) => b) : Fun<a, b> =>
     Object.assign<(input: a) => b, Pick<Fun<a, b>, keyof Fun<a, b>>>(
         (input) => f(input), // wrapping f so a 'copy' is created
         {
