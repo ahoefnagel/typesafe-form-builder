@@ -1,11 +1,9 @@
-interface FormBuilder {
-    specification: Queryable<any, any>[];
-    entity: <Kind extends Entity["kind"], Data>(kind: Kind, query: (q: Queryable<Extract<Entity, { kind: Kind } >, Data>) 
-        => Queryable<Extract<Entity, { kind: Kind } >, Data> ) => FormBuilder;
+// interface FormBuilder {
+//     specification: Queryable<any, any>[];
+//     entity: <Kind extends Entity["kind"], Data>(kind: Kind, query: (q: Queryable<Extract<Entity, { kind: Kind } >, Data>) 
+//         => Queryable<Extract<Entity, { kind: Kind } >, Data> ) => FormBuilder;
     
-}
-
-type test = Partial<Student>
+// }
 
     
 /** Title: Queryable - generates a list of generics to data?
@@ -25,11 +23,11 @@ data: Student: {?...}
  *  */ 
 
  
-interface Queryable<Input, Data> {
-    data: Data; // Partial<Input>?
-    select: <Props extends (PrimitiveProps<Input>)[]>(...props: Props) 
-        => Queryable<Input, Data & Pick<Input, typeof props[number] > >;
-}
+// interface Queryable<Input, Data> {
+//     data: Data; // Partial<Input>?
+//     select: <Props extends (PrimitiveProps<Input>)[]>(...props: Props) 
+//         => Queryable<Input, Data & Pick<Input, typeof props[number] > >;
+// }
 
 // Sorry Albert we hebben per ongeluk de renderer interface verwijderd :(
 // Kan gebeuren, hier is 'die weer
@@ -39,16 +37,3 @@ interface Renderer {
     // Add: <T>(this: Renderer, ...a: [keyof T]) => Renderer;
     [key: string]: any
 }
-
-// Utility types
-type PrimitiveProps<T> = {
-    [P in keyof T]: T[P] extends object ? never : P;
-}[keyof T]
-
-type FilterPrimitiveProps<T> = Pick<T, PrimitiveProps<T>>
-
-type ChildProps<T> = {
-    [P in keyof T]: T[P] extends object ? P : never;
-}[keyof T]
-
-type FilterChildProps<T> = Pick<T, ChildProps<T>>
