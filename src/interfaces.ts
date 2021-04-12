@@ -37,16 +37,3 @@ interface Renderer {
     // Add: <T>(this: Renderer, ...a: [keyof T]) => Renderer;
     [key: string]: any
 }
-
-// Utility types
-type PrimitiveProps<T> = {
-    [P in keyof T]: T[P] extends object ? never : P;
-}[keyof T]
-
-type FilterPrimitiveProps<T> = Pick<T, PrimitiveProps<T>>
-
-type ChildProps<T> = {
-    [P in keyof T]: T[P] extends object ? P : never;
-}[keyof T]
-
-type FilterChildProps<T> = Pick<T, ChildProps<T>>

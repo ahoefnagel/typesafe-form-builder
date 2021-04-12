@@ -3,7 +3,7 @@
  * When a new entity is added to the project,
  * it also has to be added to this list.
  */
-interface Entities {
+export interface Entities {
     Student: Student,
     Course: Course,
     Grades: Grades,
