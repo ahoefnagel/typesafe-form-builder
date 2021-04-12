@@ -17,6 +17,12 @@ export const addPropToObject = <
         }
     )
 
+/**
+ * Picks a given list of properties from an object.
+ * @param object Object from which the properties will be picked.
+ * @param props List of properties that will be picked from the object.
+ * @returns A copy of the object containing only the picked properties.
+ */
 export const pickProps = <InputObject, Props extends (keyof InputObject)[]>(object: InputObject, ...props: Props) 
     : Pick<InputObject, typeof props[number]> => {
         const ret = {} as Pick<InputObject, typeof props[number]>; // unavoidable cast
@@ -24,9 +30,15 @@ export const pickProps = <InputObject, Props extends (keyof InputObject)[]>(obje
         return ret;
 }
 
+/**
+ * Omits a given list of properties from an object.
+ * @param object Object from which the properties will be omitted.
+ * @param props List of properties that will be omitted from the object.
+ * @returns A copy of the object containing only the properties that were not omitted.
+ */
 export const omitProps = <InputObject, Props extends (keyof InputObject)[]>(object: InputObject, ...props: Props) 
     : Omit<InputObject, typeof props[number]> => {
         const ret: Omit<InputObject, typeof props[number]> = {...object};
         props.forEach(prop => delete (ret as InputObject)[prop])
         return ret
-    }
+}
