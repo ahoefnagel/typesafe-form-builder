@@ -39,6 +39,6 @@ export const pickProps = <InputObject, Props extends (keyof InputObject)[]>(obje
 export const omitProps = <InputObject, Props extends (keyof InputObject)[]>(object: InputObject, ...props: Props) 
     : Omit<InputObject, typeof props[number]> => {
         const ret: Omit<InputObject, typeof props[number]> = {...object};
-        props.forEach(prop => delete (ret as InputObject)[prop])
+        props.forEach(prop => delete (ret as InputObject)[prop]);
         return ret
 }
