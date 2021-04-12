@@ -14,7 +14,7 @@ export type Queryable<InputObject, Querried> = {
 }
 
 /**
- * Creates an instance of a `Queryable` type, with a given `qurried` state as starting point.
+ * Creates an instance of a `Queryable` type, with a given `querried` state as starting point.
  * 
  * A Queryable can be used to easily query properties and child objects of an object.
  * @param object Input object that will be querried.
