@@ -1,5 +1,3 @@
-import { fun, Fun } from "./core/function";
-
 /**
  * Set of all entities in the project.
  * When a new entity is added to the project,
