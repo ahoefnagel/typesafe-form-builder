@@ -4,6 +4,11 @@ import { omitProps, pickProps } from "./object-utilities";
 export type Queryable<InputObject, Querried> = {
     object: InputObject,
     querried: Querried,
+    /**
+     * Select a list of properties from the object to be querried.
+     * @param props A list of properties to querried from the `object`.
+     * @returns A new Querryable instance with the selected properties added to the `querried` object.
+     */
     select: <Props extends PrimitiveProps<InputObject>[]>(...props: Props) => 
         Queryable<Omit<InputObject, typeof props[number]>, Querried & Pick<InputObject, typeof props[number]>>
 }
@@ -33,11 +38,6 @@ const queryableStep = <InputObject, Querried>(object: InputObject, querried: Que
  * 
  * @param object Input object that will be querried.
  * @returns A new Queryable instance.
- * 
- * # Queryable
- * @function select Select a list of properties from the object to be querried.
- * @param props A list of properties to querried from the `object`.
- * @returns A new Querryable instance with the selected properties added to the `querried` object.
  */
 export const queryable = <InputObject>(object: InputObject) =>
     queryableStep(object, {});
