@@ -1,3 +1,4 @@
+import { PrimitiveProps } from "./helper-types";
 import { omitProps, pickProps } from "./object-utilities";
 
 export type Queryable<InputObject, Querried> = {
