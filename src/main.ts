@@ -1,5 +1,5 @@
-import { defaultEntity } from "./entities";
-import { queryable } from "./queryable";
+import { defaultEntity } from "./core/entities";
+import { queryable } from "./core/queryable";
 
 // testing queryable
 const testStudent = defaultEntity("Student");
