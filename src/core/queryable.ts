@@ -1,5 +1,5 @@
 import { ChildProps, PrimitiveProps } from "../utilities/helper-types";
-import { addPropToObject, omitProps, pickProps } from "../utilities/object-utilities";
+import { omitProps, pickProps } from "../utilities/object-utilities";
 
 /**
  * Type for a function that can transform the state of a `Querryable` object.
@@ -32,9 +32,9 @@ export type Queryable<InputObject, Querried> = {
      * 
      * @returns A new `Queryable` instance with the result of the child query added to the `querried` object.
      */
-    child: <ChildProp extends ChildProps<InputObject>, OutputObject, OutputQuerried>
-        (childProp: ChildProp, queryFunction: QueryFunction<InputObject[ChildProp], {}, OutputObject, OutputQuerried>) =>
-            Queryable<Omit<InputObject, ChildProp>, Querried & Record<ChildProp, OutputQuerried>>
+    child: <Prop extends ChildProps<InputObject>, OutputObject, OutputQuerried>
+        (childProp: Prop, queryFunction: QueryFunction<InputObject[Prop], {}, OutputObject, OutputQuerried>) =>
+            Queryable<Omit<InputObject, Prop>, Querried & Record<Prop, OutputQuerried>>
         
 }
 
