@@ -3,11 +3,12 @@ import { queryable } from "./core/queryable";
 
 // testing queryable
 const testStudent = defaultEntity("Student");
-console.log("Full student:")
-console.log(testStudent)
+testStudent.courses.push(defaultEntity("Course"));
+console.log("Full student:");
+console.log(testStudent);
 
 const studentQueryable = queryable(testStudent);
-const querriedStudent = studentQueryable.select("name").select("surname").querried;
+const querriedStudent = studentQueryable.select("name").select("surname").children("courses", q => q.select("name")).querried;
 console.log("Querried student:");
 console.log(querriedStudent);
 

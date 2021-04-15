@@ -31,4 +31,27 @@ export type ChildProps<T> = {
  */
 export type FilterChildProps<T> = Pick<T, ChildProps<T>>
 
-type someProps = ChildProps<{prop1: number, prop2: Object, prop3: Object}>
+/**
+ * Returns a union of all the `Array` properties in an object `T`.
+ * @param T Type of the object from which to extract the array properties.
+ * @returns A union of all the array properties of type `T`.
+ */
+export type ArrayProps<T> = {
+    [P in keyof T]: T[P] extends Array<any> ? P : never;
+}[keyof T]
+
+/**
+ * Returns an object containing all the `Array` properties in an object `T`.
+ * @param T Type of the object from which to extract the array properties.
+ * @returns A an object containing all the array properties of type `T`.
+ */
+export type FilterArrayProps<T, ElementType> = Pick<T, ArrayProps<T>>
+
+// https://stackoverflow.com/a/51399781
+/**
+ * Extracts the single element type from a given array type.
+ * @param ArrayType Array type from which the single element will be infered.
+ * @returns The element type of `ArrayType`.
+ */
+export type ArrayElement<ArrayType extends readonly unknown[]> = 
+    ArrayType extends readonly (infer ElementType)[] ? ElementType : never;
