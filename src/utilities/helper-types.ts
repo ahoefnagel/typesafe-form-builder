@@ -45,7 +45,7 @@ export type ArrayProps<T> = {
  * @param T Type of the object from which to extract the array properties.
  * @returns A an object containing all the array properties of type `T`.
  */
-export type FilterArrayProps<T, ElementType> = Pick<T, ArrayProps<T>>
+export type FilterArrayProps<T> = Pick<T, ArrayProps<T>>
 
 // https://stackoverflow.com/a/51399781
 /**
