@@ -8,7 +8,7 @@ console.log("Full student:");
 console.log(testStudent);
 
 const studentQueryable = queryable(testStudent);
-const querriedStudent = studentQueryable.select("name").select("surname").children("courses", q => q.select("name")).querried;
+const querriedStudent = studentQueryable.select("name").select("surname", "birthday").children("courses", q => q.select("name")).querried;
 console.log("Querried student:");
 console.log(querriedStudent);
 

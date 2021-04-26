@@ -16,6 +16,7 @@ interface Student {
     surname: string;
     grades: Grades[];
     courses: Course[];
+    birthday: Date
 }
 
 interface Course {
@@ -46,7 +47,8 @@ const defaultStudent = () : Student => (
         name: "",
         surname: "",
         grades: [],
-        courses: []
+        courses: [],
+        birthday: new Date()
     }
 )
 
