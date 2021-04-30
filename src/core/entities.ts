@@ -4,10 +4,10 @@
  * it also has to be added to this list.
  */
 export interface Entities {
-    Student: Student,
-    Course: Course,
-    Grades: Grades,
-    Lecture: Lecture
+    Student: Student;
+    Course: Course;
+    Grades: Grades;
+    Lecture: Lecture;
 }
 
 // Entities
@@ -16,6 +16,7 @@ interface Student {
     surname: string;
     grades: Grades[];
     courses: Course[];
+    birthday: Date;
 }
 
 interface Course {
@@ -46,7 +47,8 @@ const defaultStudent = () : Student => (
         name: "",
         surname: "",
         grades: [],
-        courses: []
+        courses: [],
+        birthday: new Date()
     }
 )
 
