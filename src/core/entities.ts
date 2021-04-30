@@ -16,7 +16,7 @@ interface Student {
     surname: string;
     grades: Grades[];
     courses: Course[];
-    birthday: Date
+    birthday: Date;
 }
 
 interface Course {

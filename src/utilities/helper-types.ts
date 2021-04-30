@@ -1,11 +1,17 @@
 /**
+ * All types that should be selectable by the .select function in a queryable.
+ * Used by the PrimitiveProps type.
+ */
+type PrimitiveTypes = number | string | boolean | Date
+
+/**
  * Returns a union of all the primitive properties in an object `T`.
  * Primitive properties are all types that shouldn't be treated as a child object.
  * @param T Type of the object from which to extract the primitive properties.
  * @returns A union of all the primitve properties of type `T`.
  */
 export type PrimitiveProps<T> = {
-    [P in keyof T]: T[P] extends object ? T[P] extends Date ? P : never : P;
+    [P in keyof T]: T[P] extends PrimitiveTypes ? P : never;
 }[keyof T]
 
 /**
