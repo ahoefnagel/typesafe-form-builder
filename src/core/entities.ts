@@ -4,10 +4,10 @@
  * it also has to be added to this list.
  */
 export interface Entities {
-    Student: Student,
-    Course: Course,
-    Grades: Grades,
-    Lecture: Lecture
+    Student: Student;
+    Course: Course;
+    Grades: Grades;
+    Lecture: Lecture;
 }
 
 // Entities
