@@ -29,3 +29,7 @@ export type ChildProps<T> = {
  * @returns A an object containing all the child properties of type `T`.
  */
 export type FilterChildProps<T> = Pick<T, ChildProps<T>>
+
+export type IsEqual<T, U, Y=unknown, N=never> =
+  (<G>() => G extends T ? 1 : 2) extends
+  (<G>() => G extends U ? 1 : 2) ? Y : N;
