@@ -45,11 +45,10 @@ export type ChildProps<T> = {
  */
 export type FilterChildProps<T> = Pick<T, ChildProps<T>>
 
-<<<<<<< HEAD
 export type IsEqual<T, U, Y=unknown, N=never> =
   (<G>() => G extends T ? 1 : 2) extends
   (<G>() => G extends U ? 1 : 2) ? Y : N;
-=======
+  
 /**
  * Returns a union of all the `Array` properties in an object `T`.
  * @param T Type of the object from which to extract the array properties.
@@ -74,4 +73,3 @@ export type FilterArrayProps<T> = Pick<T, ArrayProps<T>>
  */
 export type ArrayElement<ArrayType extends readonly unknown[]> = 
     ArrayType extends readonly (infer ElementType)[] ? ElementType : never;
->>>>>>> main
