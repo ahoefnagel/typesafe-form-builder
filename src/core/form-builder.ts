@@ -1,28 +1,30 @@
-import { IsEqual } from "../utilities/helper-types";
+import { IsEqual, Listify } from "../utilities/helper-types";
 import { defaultEntity, Entities } from "./entities";
-import { Queryable, queryable } from "./queryable";
+import { Queryable, QueryFunction, queryable } from "./queryable";
 
 interface FormBuilder {
-    entity: <EntityType extends Entities[EQ], EQ extends keyof Entities>(entity: EQ) 
-        => Queryable<Entities[EQ], {}>; //Queryable<ObjectType, {}>;
-    // entity: <EntityType extends keyof Entities>(entity: EntityType) => 
-    //     Queryable<EntityType, {}>; //Queryable<ObjectType, {}>;
-
-    
+    specification: Listify<Partial<Entities>>,//Partial<Entities>,
+    entity: <EntityType extends Entities[EQ], EQ extends keyof Entities>(entity: EQ, 
+        q: QueryFunction<Entities[EQ], {}, Partial<Entities[EQ]>, Partial<Entities[EQ]> >) =>
+        FormBuilder
 }
 
 // FormBuilder constructor
-const formBuilder = function() : FormBuilder {
+export const FormBuilder = function() : FormBuilder {
     return {
-        entity: <EntityType extends Entities[EQ], EQ extends keyof Entities>(entity: EQ) => {
-            return queryable(defaultEntity<EQ>(entity));
-        // entity: <EntityType extends Entities>(entity: keyof EntityType) => {
-        //     return queryable(defaultEntity<EntityType>(entity));
+        specification: {} as Listify<Partial<Entities>>,
 
+        entity: function(entity, q) {
+            const w1 = q(queryable(defaultEntity(entity)));
+            const w2 = queryable(defaultEntity(entity));
+            const w3 = defaultEntity(entity);
+
+            //TODO: if list empty, create new list with single item, else add querried to list
+            this.specification[entity] = [q(queryable(defaultEntity(entity))).querried];
+            return this;
         },
+        
     }
 }()
 
-var fb = formBuilder.entity<Entities["Student"], "Student">("Student").select("surname", "name");
-var ab = fb.select()
 

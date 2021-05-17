@@ -73,3 +73,7 @@ export type FilterArrayProps<T> = Pick<T, ArrayProps<T>>
  */
 export type ArrayElement<ArrayType extends readonly unknown[]> = 
     ArrayType extends readonly (infer ElementType)[] ? ElementType : never;
+
+export type Listify<T> = {
+    [P in keyof T]: (T[P])[any];
+};

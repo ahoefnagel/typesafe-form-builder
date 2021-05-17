@@ -4,7 +4,7 @@ import { omitProps, pickProps } from "../utilities/object-utilities";
 /**
  * Type for a function that can transform the state of a `Querryable` object.
  */
-type QueryFunction<InputObject, InputQuerried, OutputObject, OutputQuerried> = 
+export type QueryFunction<InputObject, InputQuerried, OutputObject, OutputQuerried> = 
     (q: Queryable<InputObject, InputQuerried>) => Queryable<OutputObject, OutputQuerried>;
 
 export type Queryable<InputObject, Querried> = {
