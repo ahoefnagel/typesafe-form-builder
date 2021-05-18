@@ -1,0 +1,22 @@
+<!-- item is a primitive value -->
+<span *ngIf="isPrimitive(item); else arrayBlock">
+    <input  type="text" [value]="item" (input)="onInput($event)">
+    Value: {{item}}
+</span>
+
+<!-- item is an array -->
+<ng-template #arrayBlock>
+    <ul *ngIf="isArray(item); else objectBlock">
+        <li *ngFor="let arrayItem of item">
+            <app-form-item [item]="arrayItem"></app-form-item>
+        </li>
+    </ul>
+</ng-template>
+
+<!-- item is a child object -->
+<ng-template #objectBlock>
+    <div *ngFor="let keyVal of item | keyvalue; trackBy: propTrackByFn">
+        {{keyVal.key}}:
+        <app-form-item [item]="keyVal.value" (itemChange)="onItemPropChange(keyVal.key, $event)"></app-form-item>
+    </div>
+</ng-template>
