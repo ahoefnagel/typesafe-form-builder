@@ -3,7 +3,7 @@ import { defaultEntity, Entities } from "./entities";
 import { Queryable, QueryFunction, queryable } from "./queryable";
 
 interface FormBuilder {
-    specification: Listify<Partial<Entities>>,//Partial<Entities>,
+    readonly specification: Listify<Partial<Entities>>,//Partial<Entities>,
     entity: <EntityType extends Entities[EQ], EQ extends keyof Entities>(entity: EQ, 
         q: QueryFunction<Entities[EQ], {}, Partial<Entities[EQ]>, Partial<Entities[EQ]> >) =>
         FormBuilder
