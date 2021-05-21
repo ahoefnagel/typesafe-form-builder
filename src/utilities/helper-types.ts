@@ -69,3 +69,9 @@ export type FilterArrayProps<T> = Pick<T, ArrayProps<T>>
  */
 export type ArrayElement<ArrayType extends readonly unknown[]> = 
     ArrayType extends readonly (infer ElementType)[] ? ElementType : never;
+
+
+/**
+ * All typeof types extend with date and array.
+ */
+export type TypeOfTypes = "undefined" | "boolean" | "number" | "bigint" | "string" | "symbol" |	"function" | "object" | "date" | "array"
