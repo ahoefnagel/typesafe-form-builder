@@ -5,6 +5,8 @@
  * @param value The value to be given to the property.
  * @returns A copy of `object` with the given `prop` and `value` added to it.
  */
+import {TypeOfTypes} from "./helper-types";
+
 export const addPropToObject = <
     InputObject extends Record<string, any>,
     Prop extends string,
@@ -41,4 +43,17 @@ export const omitProps = <InputObject, Props extends (keyof InputObject)[]>(obje
         const ret: Omit<InputObject, typeof props[number]> = {...object};
         props.forEach(prop => delete (ret as InputObject)[prop]);
         return ret
+}
+
+
+/**
+ * Extended typeof function for date and arrays
+ * @param Prop to be checked.
+ * @returns The type as a string
+ */
+export const extendTypeOf = (prop:any):TypeOfTypes => {
+  return typeof(prop) !== "object"?typeof(prop):
+    prop instanceof Date?"date":
+        prop instanceof Array?"array":
+          "object"
 }
