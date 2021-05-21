@@ -45,7 +45,6 @@ export const omitProps = <InputObject, Props extends (keyof InputObject)[]>(obje
         return ret
 }
 
-
 /**
  * Extended typeof function for date and arrays
  * @param Prop to be checked.
