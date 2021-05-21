@@ -19,12 +19,9 @@ export class FormItemComponent implements OnInit {
     ngOnInit(): void {
     }
 
-    onInput(event: Event) {
-        if (!event.target)
-            return;
-        const target: HTMLInputElement = event.target as HTMLInputElement;
-        this.item = target.value;
-        this.itemChange.emit(target.value);
+    onItemChange(newItem: Item) {
+        this.item = newItem;
+        this.itemChange.emit(newItem);
     }
 
     onItemPropChange(prop: any, value: Item[typeof prop]) {

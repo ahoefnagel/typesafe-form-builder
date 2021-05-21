@@ -2,7 +2,9 @@
  * All types that should be selectable by the .select function in a queryable.
  * Used by the PrimitiveProps type.
  */
-type PrimitiveTypes = number | string | boolean | Date
+export type PrimitiveTypes = number | string | boolean | Date;
+
+export type PrimitiveTypesNames = "number" | "string" | "boolean" | "date";
 
 /**
  * Returns a union of all the primitive properties in an object `T`.

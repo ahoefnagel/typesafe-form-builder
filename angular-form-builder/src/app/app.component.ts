@@ -26,6 +26,7 @@ export class AppComponent {
             {
                 name: "Development",
                 studypoints: 0,
+                active: true,
                 lectures: [
                     {
                         title: "Hello World Lecture",

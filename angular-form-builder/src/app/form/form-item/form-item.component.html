@@ -1,7 +1,6 @@
 <!-- item is a primitive value -->
 <span *ngIf="isPrimitive(item); else arrayBlock">
-    <input  type="text" [value]="item" (input)="onInput($event)">
-    Value: {{item}}
+    <app-form-primitive-input [value]="item" (valueChange)="onItemChange($event)"></app-form-primitive-input>
 </span>
 
 <!-- item is an array -->
