@@ -31,3 +31,9 @@ console.log("Specification created object fb: ", JSON.stringify(fb));
 console.log("Specification created object ab: ", JSON.stringify(ab));
 ab = ab.entity("Student", q => q.select("surname", "birthday"));
 console.log("Specification changed object ab: ", JSON.stringify(ab));
+var cd = ab.entity("Grades", 
+    q => q.child("course", 
+        r => r.select("studyPoints")
+    )
+);
+console.log("Specification created object cd: ", JSON.stringify(cd));

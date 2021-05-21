@@ -5,7 +5,8 @@ import { Queryable, QueryFunction, queryable } from "./queryable";
 interface FormBuilder<Spec extends Listify<Partial<Entities>>> {
     readonly specification: Listify<Partial<Entities>>,//Partial<Entities>,
     entity: <EQ extends keyof Entities>(entity: EQ, 
-        q: QueryFunction<Entities[EQ], {}, Partial<Entities[EQ]>, Partial<Entities[EQ]> >) =>
+//        q: QueryFunction<Entities[EQ], {}, Partial<Entities[EQ]>, Partial<Entities[EQ]> >) =>
+        q: QueryFunction<Entities[EQ], Partial<Entities[EQ]>, Partial<Entities[EQ]>, Partial<Entities[EQ]> >) =>
         FormBuilder<Spec>
 }
 
