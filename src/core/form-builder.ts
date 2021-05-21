@@ -15,12 +15,11 @@ export const FormBuilder = function() : FormBuilder {
         specification: {} as Listify<Partial<Entities>>,
 
         entity: function(entity, q) {
-            const w1 = q(queryable(defaultEntity(entity)));
-            const w2 = queryable(defaultEntity(entity));
-            const w3 = defaultEntity(entity);
-
-            //TODO: if list empty, create new list with single item, else add querried to list
-            this.specification[entity] = [q(queryable(defaultEntity(entity))).querried];
+            if(this.specification[entity] == undefined)
+                this.specification[entity] = [q(queryable(defaultEntity(entity))).querried]
+            else
+                this.specification[entity].push(q(queryable(defaultEntity(entity))).querried);
+             
             return this;
         },
         
