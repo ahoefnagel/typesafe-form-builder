@@ -25,7 +25,9 @@ console.log(quierredGrades);
 
 var fb = FormBuilder.entity("Student", q => q.select("name"));
 var ab = fb.entity('Lecture', q => q.select("title", "topic"))
-ab.entity("Student", q => q.select("surname", "birthday"));
 
 
-console.log("Specification created object: ", JSON.stringify(ab));
+console.log("Specification created object fb: ", JSON.stringify(fb));
+console.log("Specification created object ab: ", JSON.stringify(ab));
+ab = ab.entity("Student", q => q.select("surname", "birthday"));
+console.log("Specification changed object ab: ", JSON.stringify(ab));

@@ -8,8 +8,8 @@ export type QueryFunction<InputObject, InputQuerried, OutputObject, OutputQuerri
     (q: Queryable<InputObject, InputQuerried>) => Queryable<OutputObject, OutputQuerried>;
 
 export type Queryable<InputObject, Querried> = {
-    object: InputObject,
-    querried: Querried,
+    readonly object: InputObject,
+    readonly querried: Querried,
 
     /**
      * Select a list of properties from the object to be querried.
