@@ -84,17 +84,23 @@ let testObject = {
 ///  title
 //    topic
 
+const createDate = function(date:Date):string {
+  return `${date.getDate()}-${date.getMonth()+1}-${date.getFullYear()}`
+}
 
 
-const toConsole:RenderFunctions<void> = {
-  String: function (key: string, value: string):void {console.log("STRING | Key: " , key, " Value: ", value)},
-  Number: function (key: string, value: number):void {console.log("NUMBER | Key: " , key, " Value: ", value)},
-  Boolean: function  (key: string, value: boolean):void {console.log("BOOLEAN | Key: " , key, " Value: ", value)},
-  // Nested: function <T>(key: string, value:T):void {console.log("Nested | Key: " , key)}
+const toConsole:RenderFunctions<string> = {
+  String: function (key: string, value: string):string {return `\n${key}: ${value}`},
+  Number: function (key: string, value: number):string { return `\n${key}: ${value}`},
+  Boolean: function  (key: string, value: boolean):string { return `\n${key}: ${value}`},
+  Date: function  (key: string, value: Date):string { return `\n${key}: ${createDate(value)}`},
+  // Nested: function  (key: string, value: Date):void {console.log("Nested | Key: " , key, " Value: ", value)},
+  Object: function <T>(key: string, value:T):string {return `${value}`},
+  Array: function <T>(key: string, value:T):string {return `\n${key} ${value}`}
 }
 
 let renderTest = Renderer(testObject)
-renderTest.render(toConsole)
+renderTest.render(toConsole).forEach(values => console.log(values))
 
 
 

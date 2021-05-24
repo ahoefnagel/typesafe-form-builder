@@ -1,11 +1,13 @@
-import {Entities, Rendered} from "./entities";
+import {defaultEntity, Entities, Rendered} from "./entities";
 import {extendTypeOf} from "../utilities/object-utilities";
+
 export type RenderFunctions<T> = {
-  String:  (key: string, value: string) => T,
+  String: (key: string, value: string) => T,
   Number: (key: string, value: number) => T
   Boolean: (key: string, value: boolean) => T
-  // Nested: <U>(key: string, value: U) => T
-  // Date: (key: string, value: Date) => T
+  Array: <U>(key: string, value: U) => T
+  Object: <U>(key: string, value: U) => T
+  Date: (key: string, value: Date) => T
   // Array: (key: string, value: array) => T
   // Object: (key: string, value: object) => T
   // :(key: string, value: string) => string,
@@ -14,44 +16,66 @@ export type RenderFunctions<T> = {
 }
 //TODO helper props gebruiken
 
-type Renderer<RenderData extends Object,RenderOutput> = {
+type Renderer<RenderData, RenderOutput> = {
   data: RenderData
-  render: ((callback: RenderFunctions<RenderOutput>) => void)
+  render: ((callback: RenderFunctions<RenderOutput>) => RenderOutput[])
 }
-
-export const Renderer = <RenderData ,RenderOutput>(data:RenderData): Renderer<RenderData,RenderOutput> => {
+export const Renderer = <RenderData, RenderOutput>(data: RenderData): Renderer<RenderData, RenderOutput> => {
   return {
     data: data,
-    render: function (this: Renderer<RenderData,RenderOutput>, callback:RenderFunctions<RenderOutput>): void {
-      return Object.keys(this.data).forEach(key => {
-        switch(extendTypeOf(this.data[key])){
-          case "string":
-            return callback.String(key,this.data[key]);
-          case "number":
-            return callback.Number(key,this.data[key]);
-          case "boolean":
-            return callback.Boolean(key,this.data[key]);
-          case "object":
-            // if(this.data[key] instanceof Date){
-            //   // callback.Date(key,this.data[key])
-            // }
-            //Other cases such as array,object etc.
-            // if(this.data[key] instanceof Array){
-            //   return callback.Nested(key,Renderer(this.data[key]).render(callback))
-            // }
-
-          default:
-            throw "Unsupported type";
-        }
-        // console.log(key)
-        // return callback[extendTypeOf(this.data[key])](key,this.data[key])
-
-      })
+    render: function (this: Renderer<RenderData, RenderOutput>, callback: RenderFunctions<RenderOutput>): RenderOutput[] {
+      return useCallback(this.data, callback);
     }
   }
 }
 
+const useCallback = function <RenderData, T>(data: RenderData, callback: RenderFunctions<T>) {
+  return Object.keys(data).map(function (key , index) {
+    const value = data[key as keyof RenderData]  // Why does this work while data[key] should work as well.  Does .map and .foreach loose info of key? or Doesn't compiler know that keys of given object is a string
+    switch (extendTypeOf(value)) {
+      case "string":
+        return callback.String(key, String(value));
+      case "number":
+        return callback.Number(key, Number(value));
+      case "boolean":
+        return callback.Boolean(key, Boolean(value));
+      case "array":
+        return callback.Array(key,Renderer(value).render(callback))
+      case "object":
+        return callback.Object(key,Renderer(value).render(callback))
+      case "date":
+        return callback.Date(key, new Date(String(value)));
+      default:
+        throw `Unsupported type - ${extendTypeOf(value)}`;
+    }
+  })
 
+  // return Object.keys(data).forEach(key => {
+  //    switch(extendTypeOf(value)){
+  //      case "string":
+  //        return callback.String(key,value);
+  //      case "number":
+  //        return callback.Number(key,value);
+  //      case "boolean":
+  //        return callback.Boolean(key,value);
+  //      case "object":
+  //      //   return callback.Nested(key,Renderer(this.data[key]).render(callback))
+  //
+  //      // if(this.data[key] instanceof Date){
+  //      //   // callback.Date(key,this.data[key])
+  //      // }
+  //      //Other cases such as array,object etc.
+  //      // if(this.data[key] instanceof Array){
+  //      // }
+  //
+  //      default:
+  //        throw "Unsupported type";
+  //    }
+  //    // console.log(key)
+  //    // return callback[extendTypeOf(this.data[key])](key,this.data[key])
+  //
+  //  })
+}
 
 ///
 // const value = this.data[key]
@@ -85,7 +109,6 @@ export const Renderer = <RenderData ,RenderOutput>(data:RenderData): Renderer<Re
 //       throw "Unsupported type";
 //   }
 // })
-
 
 
 // Uitzoeken of Functie of object?
