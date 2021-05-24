@@ -1,5 +1,6 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
-import { PrimitiveTypes, PrimitiveTypesNames } from '../../../../../src/utilities/helper-types';
+import { PrimitiveTypes } from '../../../../../src/utilities/helper-types';
+import { primitiveToInputType, stringToPrimitive } from '../../../../../src/utilities/input-mapping';
 
 type InputElementTypes = "text" | "number" | "checkbox" | "date";
 type Value = PrimitiveTypes | null;
@@ -24,29 +25,9 @@ export class FormPrimitiveInputComponent implements OnInit {
             case "string":
             case "number":
             case "boolean":
-                this.type = this.primitiveToInputType(valueType);
+                this.type = primitiveToInputType(valueType);
                 break;
         }
-    }
-
-    primitiveToInputType(primitiveType: PrimitiveTypesNames): InputElementTypes {
-        const typeMapping: {[key in PrimitiveTypesNames] : InputElementTypes} = {
-            "string": "text",
-            "number": "number",
-            "boolean": "checkbox",
-            "date": "date"
-        }
-        return typeMapping[primitiveType];
-    }
-
-    castToPrimitive(value: string, primitiveType: PrimitiveTypesNames): PrimitiveTypes {
-        const castMapping: {[key in PrimitiveTypesNames] : (val: string) => PrimitiveTypes} = {
-            "string": val => String(val),
-            "number": val => Number(val),
-            "boolean": val => Boolean(val),
-            "date": val => Date.parse(val),
-        }
-        return castMapping[primitiveType](value);
     }
 
     onInput(event: Event) {
@@ -62,7 +43,7 @@ export class FormPrimitiveInputComponent implements OnInit {
             case "string":
             case "number":
             case "boolean":
-                this.updateValue(this.castToPrimitive(event.target.value, valueType));
+                this.updateValue(stringToPrimitive(event.target.value, valueType));
                 break;
         }
         

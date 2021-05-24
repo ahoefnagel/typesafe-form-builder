@@ -4,7 +4,17 @@
  */
 export type PrimitiveTypes = number | string | boolean | Date;
 
+/**
+ * Names of all primitive types that are supported by the form builder.
+ */
 export type PrimitiveTypesNames = "number" | "string" | "boolean" | "date";
+
+/**
+ * Type names for the `type` attribute of an input element.
+ * These types are used when converting a value from an input element
+ * to the needed type.
+ */
+export type InputElementTypes = "number" | "text" | "checkbox" | "date";
 
 /**
  * Returns a union of all the primitive properties in an object `T`.
