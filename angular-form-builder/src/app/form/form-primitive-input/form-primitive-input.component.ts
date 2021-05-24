@@ -1,8 +1,8 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { PrimitiveTypes } from '../../../../../src/utilities/helper-types';
-import { primitiveToInputType, stringToPrimitive } from '../../../../../src/utilities/input-mapping';
+import { primitiveToInputType, stringToPrimitive, InputElementTypes } from '../../../../../src/utilities/input-mapping';
+import { extendTypeOf } from '../../../../../src/utilities/object-utilities';
 
-type InputElementTypes = "text" | "number" | "checkbox" | "date";
 type Value = PrimitiveTypes | null;
 
 @Component({
@@ -20,7 +20,7 @@ export class FormPrimitiveInputComponent implements OnInit {
     constructor() { }
 
     ngOnInit(): void {
-        const valueType = typeof this.value; // TODO: replace with extend typeof function that supports the date type
+        const valueType = extendTypeOf(this.value); // TODO: replace with extend typeof function that supports the date type
         switch (valueType) {
             case "string":
             case "number":
@@ -38,7 +38,7 @@ export class FormPrimitiveInputComponent implements OnInit {
             return
         }
         
-        const valueType = typeof this.value;
+        const valueType = extendTypeOf(this.value);
         switch(valueType) {
             case "string":
             case "number":

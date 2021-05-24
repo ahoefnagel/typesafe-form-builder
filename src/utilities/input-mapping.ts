@@ -1,4 +1,11 @@
-import { PrimitiveTypes, PrimitiveTypesNames, InputElementTypes } from './helper-types';
+import { PrimitiveTypes, PrimitiveTypesNames } from './helper-types';
+
+/**
+ * Type names for the `type` attribute of an input element.
+ * These types are used when converting a value from an input element
+ * to the needed type.
+ */
+export type InputElementTypes = "number" | "text" | "checkbox" | "date";
 
 /**
  * Takes the name of a primitive data type, and returns the a string 
