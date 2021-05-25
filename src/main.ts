@@ -62,6 +62,7 @@ let student_luuk =   {
 }
 
 let testObject = {
+  word: "hello",
   student: [
     student_luuk
   ],
@@ -87,9 +88,9 @@ let testObject = {
 
 
 const toConsole:RenderFunctions<void> = {
-  String: function (key: string, value: string):void {console.log("STRING | Key: " , key, " Value: ", value)},
-  Number: function (key: string, value: number):void {console.log("NUMBER | Key: " , key, " Value: ", value)},
-  Boolean: function  (key: string, value: boolean):void {console.log("BOOLEAN | Key: " , key, " Value: ", value)},
+  string: function <K>(key: K, value: string):void {console.log("STRING | Key: " , key, " Value: ", value)},
+  number: function <K>(key: K, value: number):void {console.log("NUMBER | Key: " , key, " Value: ", value)},
+  boolean: function  <K>(key: K, value: boolean):void {console.log("BOOLEAN | Key: " , key, " Value: ", value)},
   // Nested: function <T>(key: string, value:T):void {console.log("Nested | Key: " , key)}
 }
 

@@ -1,9 +1,9 @@
 import {Entities, Rendered} from "./entities";
-import {extendTypeOf} from "../utilities/object-utilities";
+import {customTypeOf, extendTypeOf, getKeys} from "../utilities/object-utilities";
 export type RenderFunctions<T> = {
-  String:  (key: string, value: string) => T,
-  Number: (key: string, value: number) => T
-  Boolean: (key: string, value: boolean) => T
+  string:  <K>(key: K, value: string) => T,
+  number: <K>(key: K, value: number) => T
+  boolean: <K>(key: K, value: boolean) => T
   // Nested: <U>(key: string, value: U) => T
   // Date: (key: string, value: Date) => T
   // Array: (key: string, value: array) => T
@@ -16,33 +16,45 @@ export type RenderFunctions<T> = {
 
 type Renderer<RenderData extends Object,RenderOutput> = {
   data: RenderData
-  render: ((callback: RenderFunctions<RenderOutput>) => void)
+  render: (callback: RenderFunctions<RenderOutput>) => void;
 }
 
 export const Renderer = <RenderData ,RenderOutput>(data:RenderData): Renderer<RenderData,RenderOutput> => {
   return {
     data: data,
-    render: function (this: Renderer<RenderData,RenderOutput>, callback:RenderFunctions<RenderOutput>): void {
-      return Object.keys(this.data).forEach(key => {
-        switch(extendTypeOf(this.data[key])){
-          case "string":
-            return callback.String(key,this.data[key]);
-          case "number":
-            return callback.Number(key,this.data[key]);
-          case "boolean":
-            return callback.Boolean(key,this.data[key]);
-          case "object":
-            // if(this.data[key] instanceof Date){
-            //   // callback.Date(key,this.data[key])
-            // }
-            //Other cases such as array,object etc.
-            // if(this.data[key] instanceof Array){
-            //   return callback.Nested(key,Renderer(this.data[key]).render(callback))
-            // }
+    render: function (this: Renderer<RenderData,RenderOutput>, callback): void {
+      
+      const keys = getKeys(this.data);
+      return keys.forEach(key => {
+        const value = this.data[key];
 
-          default:
-            throw "Unsupported type";
-        }
+        if (customTypeOf(value, "string"))
+          return callback.string(key,value);
+        else if (customTypeOf(value, "number"))
+          return callback.number(key,value);
+        else if (customTypeOf(value, "boolean"))
+          return callback.boolean(key,value);
+
+        // const dataType = extendTypeOf(value);
+        // switch(dataType){
+        //   case "string":
+        //     return callback.string(key,value);
+        //   case "number":
+        //     return callback.number(key,value);
+        //   case "boolean":
+        //     return callback.boolean(key,value);
+        //   case "object":
+        //     // if(this.data[key] instanceof Date){
+        //     //   // callback.Date(key,this.data[key])
+        //     // }
+        //     //Other cases such as array,object etc.
+        //     // if(this.data[key] instanceof Array){
+        //     //   return callback.Nested(key,Renderer(this.data[key]).render(callback))
+        //     // }
+
+        //   default:
+        //     throw "Unsupported type";
+        // }
         // console.log(key)
         // return callback[extendTypeOf(this.data[key])](key,this.data[key])
 
@@ -99,4 +111,20 @@ export const Renderer = <RenderData ,RenderOutput>(data:RenderData): Renderer<Re
 // callback generates the html
 // renderer(print)
 
-
+function deepCopy(obj: any): any {
+  let clonedObj: any
+  if (obj instanceof Array) {
+    clonedObj = []
+    for (let i = 0, len = obj.length; i < len; i++) {
+      (typeof (obj[i]) === "object") ? clonedObj[i] = deepCopy(obj[i]) : clonedObj[i] = obj[i];
+    }
+    return clonedObj;
+  }
+  if (obj instanceof Object) {
+    clonedObj = {}
+    Object.keys(obj).forEach(key => {
+      (typeof (obj[key]) === "object") ? clonedObj[key] = deepCopy(obj[key]) : clonedObj[key] = obj[key];
+    })
+    return clonedObj;
+  }
+}
