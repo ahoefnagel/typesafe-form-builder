@@ -94,7 +94,8 @@ export type ArrayElement<ArrayType extends readonly unknown[]> =
 
 
 /**
- * All typeof types extend with date and array.
+ * Map of all values that can be returned by javascript's `typeof` operator.
+ * Extended with "date" and "array" for use with the form builder.
  */
 export type TypeOfTypesMap = {
     undefined: undefined,
@@ -109,16 +110,22 @@ export type TypeOfTypesMap = {
     array: Array<unknown>
 }
 
+/**
+ * Union of all types in the `TypeOfTypesMap`.
+ */
 export type TypeOfTypesUnion = TypeOfTypesMap[keyof TypeOfTypesMap];
 
+/**
+ * Union of all type names/keys in the `TypeOfTypesMap`.
+ */
 export type TypeOfTypes = {
     [P in keyof TypeOfTypesMap]: P;
 }[keyof TypeOfTypesMap]
 
+/**
+ * Map of type names to the corresponding function used to
+ * check if a value is of that type.
+ */
 export type TypeCheckFunctions = {
     [P in keyof TypeOfTypesMap]: (val: any) => boolean;
-}
-
-export function isSomething(value: any): value is TypeOfTypesUnion {
-    return typeof value === "string";
 }

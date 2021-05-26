@@ -1,7 +1,6 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { PrimitiveTypes } from '../../../../../src/utilities/helper-types';
-import { primitiveToInputType, stringToPrimitive, InputElementTypes } from '../../../../../src/utilities/input-mapping';
-import { extendTypeOf } from '../../../../../src/utilities/object-utilities';
+import { primitiveNameToInputType, stringToPrimitive, InputElementTypes, isPrimitive, typeOfPrimitive } from '../../../../../src/utilities/input-mapping';
 
 type Value = PrimitiveTypes | null;
 
@@ -19,36 +18,34 @@ export class FormPrimitiveInputComponent implements OnInit {
 
     constructor() { }
 
+    /**
+     * Runs when the component is initialized.
+     * Determines the `type` used for the input element in this
+     * component's template.
+     */
     ngOnInit(): void {
-        const valueType = extendTypeOf(this.value); // TODO: replace with extend typeof function that supports the date type
-        switch (valueType) {
-            case "string":
-            case "number":
-            case "boolean":
-                this.type = primitiveToInputType(valueType);
-                break;
-        }
+        if (isPrimitive(this.value))
+            this.type = primitiveNameToInputType(typeOfPrimitive(this.value));
     }
 
+    /**
+     * Called by the input element of this component when its value changes.
+     * @param event event fired by the input element.
+     */
     onInput(event: Event) {
         if (!event.target || !(event.target instanceof HTMLInputElement))
             return;
-        if (this.type === "checkbox") {
+        else if (this.type === "checkbox")
             this.updateValue(event.target.checked)
-            return
-        }
-        
-        const valueType = extendTypeOf(this.value);
-        switch(valueType) {
-            case "string":
-            case "number":
-            case "boolean":
-                this.updateValue(stringToPrimitive(event.target.value, valueType));
-                break;
-        }
-        
+        else if (isPrimitive(this.value))
+            this.updateValue(stringToPrimitive(event.target.value, typeOfPrimitive(this.value)));
     }
 
+    /**
+     * Updates `this.value` and notifies the parent component or other
+     * services subscribed to the `valueChange` event emitter.
+     * @param newValue new value that will be assigned to `this.value`.
+     */
     updateValue(newValue: Value) {
         this.value = newValue;
         this.valueChange.emit(newValue);

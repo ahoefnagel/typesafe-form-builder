@@ -1,3 +1,5 @@
+import { TypeCheckFunctions, TypeOfTypes, TypeOfTypesMap } from "./helper-types";
+
 /**
  * Create a copy of an object and add a new property to it.
  * @param object To source object that the `prop` and `value` will be added to.
@@ -5,8 +7,6 @@
  * @param value The value to be given to the property.
  * @returns A copy of `object` with the given `prop` and `value` added to it.
  */
-import {TypeCheckFunctions, TypeOfTypes, TypeOfTypesMap, TypeOfTypesUnion} from "./helper-types";
-
 export const addPropToObject = <
     InputObject extends Record<string, any>,
     Prop extends string,
@@ -57,9 +57,21 @@ export const extendTypeOf = (prop:any):TypeOfTypes => {
           "object"
 }
 
+/**
+ * Returns a list of all the properties in for a given object
+ * in a type safe way.
+ * This function basically wraps `Object.keys` and retains
+ * the type information of its keys.
+ * @param object from which the keys will be returned.
+ * @returns a list of strings of all the properties on `object`.
+ */
 export const getKeys = <Obj extends Object>(object: Obj): (keyof Obj)[] => Object.keys(object) as Array<keyof Obj>
 
-const typeCheckFunctions: TypeCheckFunctions = {
+/**
+ * Map of type names and the corresponding function used to
+ * check if a value is of that type.
+ */
+export const typeCheckFunctions: TypeCheckFunctions = {
     undefined: v => typeof v === "undefined",
     boolean: v => typeof v === "boolean",
     number: v => typeof v === "number",
@@ -72,15 +84,19 @@ const typeCheckFunctions: TypeCheckFunctions = {
     array: v => v instanceof Array
 }
 
+/**
+ * Checks if the given variable `val` is equal to the type name
+ * given in `typename`.
+ * This function can be used as a type guard when working with
+ * generic data types.
+ * @param val the value for which the type will be checked.
+ * @param typeName name of the type that the value will be checked against.
+ * @returns `true` if the value is indeed equal to the given `value`,
+ * returns `false` otherwise.
+ */
 export function customTypeOf<TypeName extends TypeOfTypes>(val: any, typeName: TypeName): val is TypeOfTypesMap[TypeName] {
     if (!(typeName in typeCheckFunctions))
         return false;
     const checkFunction = typeCheckFunctions[typeName];
     return checkFunction(val);
-}
-
-function testTypecheck<Val extends TypeOfTypesMap[keyof TypeOfTypesMap]>(value: Val) {
-    if (customTypeOf(value, "date")) {
-        value;
-    }
 }
