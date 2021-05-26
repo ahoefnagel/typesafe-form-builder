@@ -39,7 +39,7 @@ export function stringToPrimitive(value: string, primitiveType: PrimitiveTypesNa
         string: val => String(val),
         number: val => Number(val),
         boolean: val => Boolean(val),
-        date: val => Date.parse(val),
+        date: val => new Date(val),
     }
     return castMapping[primitiveType](value);
 }

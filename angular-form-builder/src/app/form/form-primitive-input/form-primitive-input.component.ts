@@ -2,7 +2,7 @@ import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { PrimitiveTypes } from '../../../../../src/utilities/helper-types';
 import { primitiveNameToInputType, stringToPrimitive, InputElementTypes, isPrimitive, typeOfPrimitive } from '../../../../../src/utilities/input-mapping';
 
-type Value = PrimitiveTypes | null;
+type Value = PrimitiveTypes;
 
 @Component({
     selector: 'app-form-primitive-input',
@@ -11,7 +11,7 @@ type Value = PrimitiveTypes | null;
 })
 export class FormPrimitiveInputComponent implements OnInit {
 
-    @Input() value: Value | null = null;
+    @Input() value: Value = "";
     @Output() valueChange: EventEmitter<Value> = new EventEmitter<Value>();
 
     public type: InputElementTypes = "text";

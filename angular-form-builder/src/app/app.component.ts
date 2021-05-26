@@ -14,6 +14,7 @@ export class AppComponent {
             {
                 name: "John",
                 surname: "Doe",
+                birthday: new Date(),
                 grades: [
                     {
                         grade: 0,
