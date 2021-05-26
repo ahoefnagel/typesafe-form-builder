@@ -96,4 +96,29 @@ export type ArrayElement<ArrayType extends readonly unknown[]> =
 /**
  * All typeof types extend with date and array.
  */
-export type TypeOfTypes = "undefined" | "boolean" | "number" | "bigint" | "string" | "symbol" |	"function" | "object" | "date" | "array"
+export type TypeOfTypesMap = {
+    undefined: undefined,
+    boolean: boolean,
+    number: number,
+    bigint: bigint,
+    string: string,
+    symbol: symbol, 
+    function: Function, 
+    object: object,
+    date: Date,
+    array: Array<unknown>
+}
+
+export type TypeOfTypesUnion = TypeOfTypesMap[keyof TypeOfTypesMap];
+
+export type TypeOfTypes = {
+    [P in keyof TypeOfTypesMap]: P;
+}[keyof TypeOfTypesMap]
+
+export type TypeCheckFunctions = {
+    [P in keyof TypeOfTypesMap]: (val: any) => boolean;
+}
+
+export function isSomething(value: any): value is TypeOfTypesUnion {
+    return typeof value === "string";
+}
