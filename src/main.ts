@@ -23,12 +23,13 @@ const quierredGrades = gradesQuerryable.child("course", q => q.select("name")).q
 console.log("Querried grades:");
 console.log(quierredGrades);
 
-var fb = FormBuilder.entity("Student", q => q.select("name"));
-var ab = fb.entity('Lecture', q => q.select("title", "topic"))
+var fb = FormBuilder.entity("Student", q => q.select("name", "surname"));
+var ab = fb.entity('Lecture', q => q.select("title"))
 
 
 console.log("Specification created object fb: ", JSON.stringify(fb));
 console.log("Specification created object ab: ", JSON.stringify(ab));
+ab = ab.entity("Student", q => q.select("surname", "birthday"));
 ab = ab.entity("Student", q => q.select("surname", "birthday"));
 console.log("Specification changed object ab: ", JSON.stringify(ab));
 var cd = ab.entity("Grades", 

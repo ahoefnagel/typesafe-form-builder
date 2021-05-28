@@ -78,7 +78,7 @@ export type ArrayElement<ArrayType extends readonly unknown[]> =
  * Returns an object type where all children will be a list.
  */
 export type Listify<T> = {
-    [P in keyof T]: (T[P])[];
+    [P in keyof T]: T[P][];
 };
 
 /**
