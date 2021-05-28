@@ -1,81 +1,52 @@
-import {defaultEntity, Entities, Rendered} from "./entities";
-import {extendTypeOf} from "../utilities/object-utilities";
-
+import {Entities, Rendered} from "./entities";
+import {customTypeOf, extendTypeOf, getKeys} from "../utilities/object-utilities";
 export type RenderFunctions<T> = {
-  String: (key: string, value: string) => T,
-  Number: (key: string, value: number) => T
-  Boolean: (key: string, value: boolean) => T
-  Array: <U>(key: string, value: U) => T
-  Object: <U>(key: string, value: U) => T
-  Date: (key: string, value: Date) => T
-  // Array: (key: string, value: array) => T
-  // Object: (key: string, value: object) => T
-  // :(key: string, value: string) => string,
-  // [key: string]: string;
+  string:  <K>(key: K, value: string) => T,
+  number: <K>(key: K, value: number) => T
+  boolean: <K>(key: K, value: boolean) => T
+  date: <K>(key: K, value: Date) => T
+  array: <U,K>(key: K, value: U[]) => T
+  object: <U,K>(key: K, value: U) => T
 
-}
-//TODO helper props gebruiken
-
-type Renderer<RenderData, RenderOutput> = {
+} 
+type Renderer<RenderData extends Object,RenderOutput> = {
   data: RenderData
   render: ((callback: RenderFunctions<RenderOutput>) => RenderOutput[])
 }
-export const Renderer = <RenderData, RenderOutput>(data: RenderData): Renderer<RenderData, RenderOutput> => {
+
+export const Renderer = <RenderData ,RenderOutput>(data:RenderData): Renderer<RenderData,RenderOutput> => {
   return {
     data: data,
-    render: function (this: Renderer<RenderData, RenderOutput>, callback: RenderFunctions<RenderOutput>): RenderOutput[] {
-      return useCallback(this.data, callback);
+    render: function (this: Renderer<RenderData,RenderOutput>, callback:RenderFunctions<RenderOutput>):RenderOutput[] {
+      return getKeys(this.data).map(key => {
+        const value = this.data[key];
+        if (customTypeOf(value, "string")){
+          return callback.string(key,value);
+        }
+        else if (customTypeOf(value, "number")){
+          return  callback.number(key,value);
+        }
+        else if (customTypeOf(value, "boolean")){
+          return  callback.boolean(key,value);
+        }
+        else if (customTypeOf(value, "date")){
+          return callback.date(key,value);
+        }
+        else if (customTypeOf(value, "array")) {
+          return callback.array(key,  Renderer(value).render(callback));
+        }
+        else if (customTypeOf(value, "object")){
+          return callback.object(key, Renderer(value).render(callback));
+
+        }
+        else
+            throw "Unsupported type"
+      })
     }
   }
 }
 
-const useCallback = function <RenderData, T>(data: RenderData, callback: RenderFunctions<T>) {
-  return Object.keys(data).map(function (key , index) {
-    const value = data[key as keyof RenderData]  // Why does this work while data[key] should work as well.  Does .map and .foreach loose info of key? or Doesn't compiler know that keys of given object is a string
-    switch (extendTypeOf(value)) {
-      case "string":
-        return callback.String(key, String(value));
-      case "number":
-        return callback.Number(key, Number(value));
-      case "boolean":
-        return callback.Boolean(key, Boolean(value));
-      case "array":
-        return callback.Array(key,Renderer(value).render(callback))
-      case "object":
-        return callback.Object(key,Renderer(value).render(callback))
-      case "date":
-        return callback.Date(key, new Date(String(value)));
-      default:
-        throw `Unsupported type - ${extendTypeOf(value)}`;
-    }
-  })
 
-  // return Object.keys(data).forEach(key => {
-  //    switch(extendTypeOf(value)){
-  //      case "string":
-  //        return callback.String(key,value);
-  //      case "number":
-  //        return callback.Number(key,value);
-  //      case "boolean":
-  //        return callback.Boolean(key,value);
-  //      case "object":
-  //      //   return callback.Nested(key,Renderer(this.data[key]).render(callback))
-  //
-  //      // if(this.data[key] instanceof Date){
-  //      //   // callback.Date(key,this.data[key])
-  //      // }
-  //      //Other cases such as array,object etc.
-  //      // if(this.data[key] instanceof Array){
-  //      // }
-  //
-  //      default:
-  //        throw "Unsupported type";
-  //    }
-  //    // console.log(key)
-  //    // return callback[extendTypeOf(this.data[key])](key,this.data[key])
-  //
-  //  })
-}
 
 ///
 // const value = this.data[key]
@@ -111,6 +82,7 @@ const useCallback = function <RenderData, T>(data: RenderData, callback: RenderF
 // })
 
 
+
 // Uitzoeken of Functie of object?
 //
 /// Generate HTML op basis van react of angular specs html?
@@ -122,4 +94,20 @@ const useCallback = function <RenderData, T>(data: RenderData, callback: RenderF
 // callback generates the html
 // renderer(print)
 
-
+function deepCopy(obj: any): any {
+  let clonedObj: any
+  if (obj instanceof Array) {
+    clonedObj = []
+    for (let i = 0, len = obj.length; i < len; i++) {
+      (typeof (obj[i]) === "object") ? clonedObj[i] = deepCopy(obj[i]) : clonedObj[i] = obj[i];
+    }
+    return clonedObj;
+  }
+  if (obj instanceof Object) {
+    clonedObj = {}
+    Object.keys(obj).forEach(key => {
+      (typeof (obj[key]) === "object") ? clonedObj[key] = deepCopy(obj[key]) : clonedObj[key] = obj[key];
+    })
+    return clonedObj;
+  }
+}

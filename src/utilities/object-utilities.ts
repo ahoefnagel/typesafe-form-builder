@@ -5,7 +5,7 @@
  * @param value The value to be given to the property.
  * @returns A copy of `object` with the given `prop` and `value` added to it.
  */
-import {TypeOfTypes} from "./helper-types";
+import {TypeCheckFunctions, TypeOfTypes, TypeOfTypesMap, TypeOfTypesUnion} from "./helper-types";
 
 export const addPropToObject = <
     InputObject extends Record<string, any>,
@@ -55,4 +55,32 @@ export const extendTypeOf = (prop:any):TypeOfTypes => {
     prop instanceof Date?"date":
         prop instanceof Array?"array":
           "object"
+}
+
+export const getKeys = <Obj extends Object>(object: Obj): (keyof Obj)[] => Object.keys(object) as Array<keyof Obj>
+
+const typeCheckFunctions: TypeCheckFunctions = {
+    undefined: v => typeof v === "undefined",
+    boolean: v => typeof v === "boolean",
+    number: v => typeof v === "number",
+    bigint: v => typeof v === "bigint",
+    string: v => typeof v === "string",
+    symbol: v => typeof v === "symbol",
+    function: v => typeof v === "function",
+    object: v => typeof v === "object",
+    date: v => v instanceof Date,
+    array: v => v instanceof Array
+}
+
+export function customTypeOf<TypeName extends TypeOfTypes>(val: any, typeName: TypeName): val is TypeOfTypesMap[TypeName] {
+    if (!(typeName in typeCheckFunctions))
+        return false;
+    const checkFunction = typeCheckFunctions[typeName];
+    return checkFunction(val);
+}
+
+function testTypecheck<Val extends TypeOfTypesMap[keyof TypeOfTypesMap]>(value: Val) {
+    if (customTypeOf(value, "date")) {
+        value;
+    }
 }
