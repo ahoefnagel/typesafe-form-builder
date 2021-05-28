@@ -95,8 +95,6 @@ export const typeCheckFunctions: TypeCheckFunctions = {
  * returns `false` otherwise.
  */
 export function customTypeOf<TypeName extends TypeOfTypes>(val: any, typeName: TypeName): val is TypeOfTypesMap[TypeName] {
-    if (!(typeName in typeCheckFunctions))
-        return false;
     const checkFunction = typeCheckFunctions[typeName];
     return checkFunction(val);
 }
