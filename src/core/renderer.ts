@@ -4,60 +4,43 @@ export type RenderFunctions<T> = {
   string:  <K>(key: K, value: string) => T,
   number: <K>(key: K, value: number) => T
   boolean: <K>(key: K, value: boolean) => T
-  // Nested: <U>(key: string, value: U) => T
-  // Date: (key: string, value: Date) => T
-  // Array: (key: string, value: array) => T
-  // Object: (key: string, value: object) => T
-  // :(key: string, value: string) => string,
-  // [key: string]: string;
+  date: <K>(key: K, value: Date) => T
+  array: <U,K>(key: K, value: U[]) => T
+  object: <U,K>(key: K, value: U) => T
 
-}
-//TODO helper props gebruiken
-
+} 
 type Renderer<RenderData extends Object,RenderOutput> = {
   data: RenderData
-  render: (callback: RenderFunctions<RenderOutput>) => void;
+  render: ((callback: RenderFunctions<RenderOutput>) => RenderOutput[])
 }
 
 export const Renderer = <RenderData ,RenderOutput>(data:RenderData): Renderer<RenderData,RenderOutput> => {
   return {
     data: data,
-    render: function (this: Renderer<RenderData,RenderOutput>, callback): void {
-      
-      const keys = getKeys(this.data);
-      return keys.forEach(key => {
+    render: function (this: Renderer<RenderData,RenderOutput>, callback:RenderFunctions<RenderOutput>):RenderOutput[] {
+      return getKeys(this.data).map(key => {
         const value = this.data[key];
-
-        if (customTypeOf(value, "string"))
+        if (customTypeOf(value, "string")){
           return callback.string(key,value);
-        else if (customTypeOf(value, "number"))
-          return callback.number(key,value);
-        else if (customTypeOf(value, "boolean"))
-          return callback.boolean(key,value);
+        }
+        else if (customTypeOf(value, "number")){
+          return  callback.number(key,value);
+        }
+        else if (customTypeOf(value, "boolean")){
+          return  callback.boolean(key,value);
+        }
+        else if (customTypeOf(value, "date")){
+          return callback.date(key,value);
+        }
+        else if (customTypeOf(value, "array")) {
+          return callback.array(key,  Renderer(value).render(callback));
+        }
+        else if (customTypeOf(value, "object")){
+          return callback.object(key, Renderer(value).render(callback));
 
-        // const dataType = extendTypeOf(value);
-        // switch(dataType){
-        //   case "string":
-        //     return callback.string(key,value);
-        //   case "number":
-        //     return callback.number(key,value);
-        //   case "boolean":
-        //     return callback.boolean(key,value);
-        //   case "object":
-        //     // if(this.data[key] instanceof Date){
-        //     //   // callback.Date(key,this.data[key])
-        //     // }
-        //     //Other cases such as array,object etc.
-        //     // if(this.data[key] instanceof Array){
-        //     //   return callback.Nested(key,Renderer(this.data[key]).render(callback))
-        //     // }
-
-        //   default:
-        //     throw "Unsupported type";
-        // }
-        // console.log(key)
-        // return callback[extendTypeOf(this.data[key])](key,this.data[key])
-
+        }
+        else
+            throw "Unsupported type"
       })
     }
   }

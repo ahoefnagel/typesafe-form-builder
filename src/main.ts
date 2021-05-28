@@ -1,6 +1,7 @@
 import { defaultEntity } from "./core/entities";
 import { queryable } from "./core/queryable";
 import {Renderer, RenderFunctions} from "./core/renderer";
+import {getKeys} from "./utilities/object-utilities";
 
 // testing queryable
 // const testStudent = defaultEntity("Student");
@@ -62,7 +63,6 @@ let student_luuk =   {
 }
 
 let testObject = {
-  word: "hello",
   student: [
     student_luuk
   ],
@@ -71,33 +71,47 @@ let testObject = {
     course_rocket_science
   ]
 }
-//student (obj1)
-//  name
-//  surname
-//  grades  (obj2_1)
-//
-//    grade
-//    courseid
-//course (obj3)
-// name
-// studypoints
-// lectures (obj4)
-///  title
-//    topic
 
-
-
-const toConsole:RenderFunctions<void> = {
-  string: function <K>(key: K, value: string):void {console.log("STRING | Key: " , key, " Value: ", value)},
-  number: function <K>(key: K, value: number):void {console.log("NUMBER | Key: " , key, " Value: ", value)},
-  boolean: function  <K>(key: K, value: boolean):void {console.log("BOOLEAN | Key: " , key, " Value: ", value)},
-  // Nested: function <T>(key: string, value:T):void {console.log("Nested | Key: " , key)}
+const createDate = function(date:Date):string {
+  const month = (date.getMonth()+1) < 10? "0" + (date.getMonth()+1) : date.getMonth()+1
+  return `${date.getFullYear()}-${month}-${date.getDate()}`
 }
 
+
+const renderToString:RenderFunctions<string> = {
+  string: function <K>(key:K , value: string):string {return `${key}: ${value}`},
+  number: function <K>(key:K, value: number):string { return `${key}: ${value}`},
+  boolean: function  <K>(key: K, value: boolean):string { return `${key}: ${value}`},
+  date: function  <K>(key: K, value: Date):string { return `${key}: ${createDate(value)}`},
+  object: function <T,K>(key: K, value:T):string {
+    let res = ""
+    getKeys(value).forEach(key => res += '\n' + value[key])
+    return res
+  },
+  array: function <T,K>(key: K, value:T[]):string {
+    let res = ""
+    value.forEach(v => res += v)
+    return `${key} ${res}`}
+}
+
+const renderToHtml:RenderFunctions<string> = {
+  string: function <K>(key:K , value: string):string {return `<p><label>${key}</label><input type="text" id="${key}" value="${value}"</p>`},
+  number: function <K>(key:K, value: number):string { return `<p><label>${key}</label><input type="number" id="${key}" value="${value}"</p>`},
+  boolean: function  <K>(key: K, value: boolean):string { return `<p><label>${key}</label><input type="checkbox" id="${key}" value="${value}"</p>`},
+  date: function  <K>(key: K, value: Date):string { return `<p><label>${key}</label><input type="date" id="${key}" value="${createDate(value)}"</p>`},
+  object: function <T,K>(key: K, value:T):string {
+    let res = "<li>"
+    getKeys(value).forEach(key => res +=  `<ul> ${value[key]}</ul>`)
+    return res + "</li>"
+  },
+  array: function <T,K>(key: K, value:T[]):string {
+    let res = ""
+    value.forEach(v => res += v)
+    return `<p>${key}</p>${res}`}
+}
 let renderTest = Renderer(testObject)
-renderTest.render(toConsole)
-
-
+let renderedObject = renderTest.render(renderToHtml)
+renderedObject.forEach(value => console.log(value))
 
 // FormBuilder({...data, value: newValue}).render(callback)
 
