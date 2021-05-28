@@ -94,7 +94,5 @@ export const typeCheckFunctions: TypeCheckFunctions = {
  * @returns `true` if the value is indeed equal to the given `value`,
  * returns `false` otherwise.
  */
-export function customTypeOf<TypeName extends TypeOfTypes>(val: any, typeName: TypeName): val is TypeOfTypesMap[TypeName] {
-    const checkFunction = typeCheckFunctions[typeName];
-    return checkFunction(val);
-}
+export const customTypeOf = <TypeName extends TypeOfTypes>(val: any, typeName: TypeName): val is TypeOfTypesMap[TypeName] =>
+    typeCheckFunctions[typeName](val)
