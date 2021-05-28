@@ -9,15 +9,15 @@ export type RenderFunctions<T> = {
   object: <U,K>(key: K, value: U) => T
 
 } 
-type Renderer<RenderData extends Object,RenderOutput> = {
+type Renderer<RenderData extends Object> = {
   data: RenderData
-  render: ((callback: RenderFunctions<RenderOutput>) => RenderOutput[])
+  render: <RenderOutput>(callback: RenderFunctions<RenderOutput>) => RenderOutput[]
 }
 
-export const Renderer = <RenderData ,RenderOutput>(data:RenderData): Renderer<RenderData,RenderOutput> => {
+export const Renderer = <RenderData>(data:RenderData): Renderer<RenderData> => {
   return {
     data: data,
-    render: function (this: Renderer<RenderData,RenderOutput>, callback:RenderFunctions<RenderOutput>):RenderOutput[] {
+    render: function <RenderOutput>(this: Renderer<RenderData>, callback:RenderFunctions<RenderOutput>):RenderOutput[] {
       return getKeys(this.data).map(key => {
         const value = this.data[key];
         if (customTypeOf(value, "string")){
