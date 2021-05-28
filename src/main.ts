@@ -38,3 +38,5 @@ var cd = ab.entity("Grades",
     )
 );
 console.log("Specification created object cd: ", JSON.stringify(cd));
+
+const obj = ab.specification.Lecture[0].title

@@ -2,15 +2,15 @@ import { Listify } from "../utilities/helper-types";
 import { defaultEntity, Entities } from "./entities";
 import { QueryFunction, queryable } from "./queryable";
 
-
 /**
  * Type definition for the `FormBuilder`, the root object of the project.
  */
-interface FormBuilder<Spec extends Partial<Listify<Entities>>> {
-    readonly specification: Spec,//Partial<Entities>,
-    entity: <EQ extends keyof Entities>(entity: EQ, 
-        q: QueryFunction<Entities[EQ], Partial<Entities[EQ]>, Partial<Entities[EQ]>, Spec[EQ] >) =>
-        FormBuilder<Spec>
+ interface FormBuilder<Spec> {
+    readonly specification: Spec,
+    entity: <EQ extends keyof Entities, OutputObject, OutputQuerried, QF extends QueryFunction<Entities[EQ], {}, OutputObject, OutputQuerried>>
+        (entity: EQ, q: QF) =>
+        // FormBuilder<Spec &  { [k: EQ] : ReturnType<QF>[] } >
+        FormBuilder<Spec & Record<EQ, ReturnType<QF>["querried"][]>>
 }
 
 /**
@@ -19,13 +19,17 @@ interface FormBuilder<Spec extends Partial<Listify<Entities>>> {
  * @param specification The specification the build step shoud be initialized with. 
  * @returns A new `FormBuilderStep` instance.
  */
- const FormBuilderStep = <Spec extends Partial<Listify<Entities>>>(specification: Spec) : FormBuilder<Spec> => ({
-        specification: specification,
-        // entity: (entity, q) =>  FormBuilderStep({...specification, ...{[entity]: [q(queryable(defaultEntity(entity))).querried]} })
-        entity: (entity, q) => FormBuilderStep( {
-                ...specification,
-                ...{[entity]: [q(queryable(defaultEntity(entity))).querried].concat(specification[entity] != undefined ? specification[entity] : []) } } as Spec)
-        });
+const FormBuilderStep = <Spec>(specification: Spec) : FormBuilder<Spec> => ({
+    specification: specification,
+    entity: (entity, q) => {
+        const outputQuerried = q(queryable(defaultEntity(entity))).querried;
+
+        return FormBuilderStep({
+            ...specification,
+            ...{[entity]: [outputQuerried].concat(entity in specification ? (specification as any)[entity] : []) } 
+        } as Spec & Record<typeof entity, ReturnType<typeof q>["querried"][]>)
+    }
+})
 
 /**
  * `FormBuilder` instance, creating a new and empty FormBuilder, ready to use.
