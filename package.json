@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc",
-    "development": "tsc -w"
+    "development": "tsc -w",
+    "ng-serve": "cd angular-form-builder && ng serve"
   },
   "repository": {
     "type": "git",
