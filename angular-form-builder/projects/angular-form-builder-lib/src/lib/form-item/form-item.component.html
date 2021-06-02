@@ -1,13 +1,13 @@
 <!-- item is a primitive value -->
 <span *ngIf="isPrimitive(item); else arrayBlock">
-    <app-form-primitive-input [value]="item" (valueChange)="onItemChange($event)"></app-form-primitive-input>
+    <lib-form-primitive-input [value]="item" (valueChange)="onItemChange($event)"></lib-form-primitive-input>
 </span>
 
 <!-- item is an array -->
 <ng-template #arrayBlock>
     <ul *ngIf="isArray(item); else objectBlock">
         <li *ngFor="let arrayItem of item">
-            <app-form-item [item]="arrayItem"></app-form-item>
+            <lib-form-item [item]="arrayItem"></lib-form-item>
         </li>
     </ul>
 </ng-template>
@@ -16,6 +16,6 @@
 <ng-template #objectBlock>
     <div *ngFor="let keyVal of item | keyvalue; trackBy: propTrackByFn">
         {{keyVal.key}}:
-        <app-form-item [item]="keyVal.value" (itemChange)="onItemPropChange(keyVal.key, $event)"></app-form-item>
+        <lib-form-item [item]="keyVal.value" (itemChange)="onItemPropChange(keyVal.key, $event)"></lib-form-item>
     </div>
 </ng-template>

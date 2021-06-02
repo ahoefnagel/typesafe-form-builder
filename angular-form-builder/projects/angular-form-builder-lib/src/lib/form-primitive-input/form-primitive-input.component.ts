@@ -5,7 +5,7 @@ import { primitiveNameToInputType, stringToPrimitive, InputElementTypes, isPrimi
 type Value = PrimitiveTypes;
 
 @Component({
-    selector: 'app-form-primitive-input',
+    selector: 'lib-form-primitive-input',
     templateUrl: './form-primitive-input.component.html',
     styleUrls: ['./form-primitive-input.component.scss']
 })

@@ -5,7 +5,7 @@ import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 type Item = any;
 
 @Component({
-    selector: 'app-form-item[item]',
+    selector: 'lib-form-item[item]',
     templateUrl: './form-item.component.html',
     styleUrls: ['./form-item.component.scss']
 })

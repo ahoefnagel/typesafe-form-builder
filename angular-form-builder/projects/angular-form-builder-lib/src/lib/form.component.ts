@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 
 @Component({
-    selector: 'app-form[specification]',
+    selector: 'lib-form[specification]',
     templateUrl: './form.component.html',
     styleUrls: ['./form.component.scss']
 })
