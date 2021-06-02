@@ -1,7 +1,7 @@
 import { formatDate } from '@angular/common';
 import { Pipe, PipeTransform } from '@angular/core';
-import { PrimitiveTypes } from '../../../../../src/utilities/helper-types';
-import { customTypeOf } from '../../../../../src/utilities/object-utilities';
+import { PrimitiveTypes } from 'typesafe-form-builder';
+import { customTypeOf } from 'typesafe-form-builder';
 
 @Pipe({
     name: 'formatValue'
