@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
-import { PrimitiveTypes } from '../../../../../src/utilities/helper-types';
-import { primitiveNameToInputType, stringToPrimitive, InputElementTypes, isPrimitive, typeOfPrimitive } from '../../../../../src/utilities/input-mapping';
+import { PrimitiveTypes } from 'typesafe-form-builder';
+import { primitiveNameToInputType, stringToPrimitive, InputElementTypes, isPrimitive, typeOfPrimitive } from 'typesafe-form-builder';
 
 type Value = PrimitiveTypes;
 
