@@ -6,8 +6,7 @@
   "scripts": {
     "postinstall": "tsc",
     "build": "tsc",
-    "development": "tsc -w",
-    "ng-serve": "cd angular-form-builder && ng serve"
+    "development": "tsc -w"
   },
   "repository": {
     "type": "git",
