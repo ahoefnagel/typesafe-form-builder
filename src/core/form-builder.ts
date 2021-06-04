@@ -6,7 +6,8 @@ import { QueryFunction, queryable } from "./queryable";
  */
  interface FormBuilder<Spec> {
     readonly specification: Spec,
-    entity: <EQ extends keyof Omit<Entities, keyof Spec>, OutputObject, OutputQuerried, QF extends QueryFunction<Entities[EQ], {}, OutputObject, OutputQuerried>>
+    entity: <EQ extends keyof Omit<Entities, keyof Spec>, OutputObject, OutputQuerried, 
+        QF extends QueryFunction<Entities[EQ], {}, OutputObject, OutputQuerried>>
         (entity: EQ, q: QF) =>
         FormBuilder<Spec & Record<EQ, ReturnType<QF>["querried"][]>>
 }
@@ -19,14 +20,11 @@ import { QueryFunction, queryable } from "./queryable";
  */
 const FormBuilderStep = <Spec>(specification: Spec) : FormBuilder<Spec> => ({
     specification: specification,
-    entity: (entity, q) => {
-        const outputQuerried = q(queryable(defaultEntity(entity))).querried;
-
-        return FormBuilderStep({
+    entity: (entity, q) =>  FormBuilderStep({
             ...specification,
-            ...{ [entity]: [outputQuerried] } as Record<typeof entity, ReturnType<typeof q>["querried"][]>
+            ...{ [entity]: [q(queryable(defaultEntity(entity))).querried] 
+                } as Record<typeof entity, ReturnType<typeof q>["querried"][]>
         })
-    }
 })
 
 /**
