@@ -97,13 +97,6 @@ export type ArrayElement<ArrayType extends readonly unknown[]> =
     ArrayType extends readonly (infer ElementType)[] ? ElementType : never;
 
 /**
- * Returns an object type where all children will be a list.
- */
-export type Listify<T> = {
-    [P in keyof T]: T[P][];
-};
-
-/**
  * Map of all values that can be returned by javascript's `typeof` operator.
  * Extended with "date" and "array" for use with the form builder.
  */
