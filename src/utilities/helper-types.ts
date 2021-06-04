@@ -67,6 +67,10 @@ export type ChildProps<T> = {
  */
 export type FilterChildProps<T> = Pick<T, ChildProps<T>>
 
+export type IsEqual<T, U, Y=unknown, N=never> =
+  (<G>() => G extends T ? 1 : 2) extends
+  (<G>() => G extends U ? 1 : 2) ? Y : N;
+  
 /**
  * Returns a union of all the `Array` properties in an object `T`.
  * @param T Type of the object from which to extract the array properties.
@@ -91,7 +95,6 @@ export type FilterArrayProps<T> = Pick<T, ArrayProps<T>>
  */
 export type ArrayElement<ArrayType extends readonly unknown[]> = 
     ArrayType extends readonly (infer ElementType)[] ? ElementType : never;
-
 
 /**
  * Map of all values that can be returned by javascript's `typeof` operator.
@@ -122,10 +125,6 @@ export type TypeOfTypes = {
     [P in keyof TypeOfTypesMap]: P;
 }[keyof TypeOfTypesMap]
 
-/**
- * Map of type names to the corresponding function used to
- * check if a value is of that type.
- */
 export type TypeCheckFunctions = {
     [P in keyof TypeOfTypesMap]: (val: any) => boolean;
 }
