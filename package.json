@@ -2,10 +2,12 @@
   "name": "typesafe-form-builder",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "./build/index.js",
   "scripts": {
+    "postinstall": "tsc",
     "build": "tsc",
-    "development": "tsc -w"
+    "development": "tsc -w",
+    "ng-serve": "cd angular-form-builder && ng serve"
   },
   "repository": {
     "type": "git",
@@ -19,5 +21,6 @@
   "homepage": "https://github.com/ahoefnagel/typesafe-form-builder#readme",
   "dependencies": {
     "typescript": "^4.2.3"
-  }
+  },
+  "types": "./build/index.d.ts"
 }

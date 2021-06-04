@@ -7,7 +7,7 @@ export interface Entities {
     Student: Student;
     Course: Course;
     Grades: Grades;
-    Lecture: Lecture;
+    Lecture: Lecture; 
 }
 
 // Entities
@@ -36,7 +36,7 @@ interface Lecture {
 }
 
 // Renderer
-interface Rendered {
+export interface Rendered {
     student: Student[];
     courses: Course[];
 }

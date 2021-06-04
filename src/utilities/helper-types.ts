@@ -1,8 +1,30 @@
 /**
+ * Map of all primitive types supported by the form builder.
+ * The key is the name of the type.
+ * A union of all keys in this map can be accessed from the
+ * `PrimitiveTypesNames` type.
+ * If a support for another primitive type has to be added to the
+ * form builder, it needs to be added to this map.
+ */
+export type PrimitiveTypesMap = {
+    number: number,
+    string: string,
+    boolean: boolean,
+    date: Date
+}
+
+/**
  * All types that should be selectable by the .select function in a queryable.
  * Used by the PrimitiveProps type.
  */
-type PrimitiveTypes = number | string | boolean | Date
+export type PrimitiveTypes = PrimitiveTypesMap[keyof PrimitiveTypesMap];
+
+/**
+ * Names of all primitive types that are supported by the form builder.
+ */
+export type PrimitiveTypesNames = {
+    [P in keyof PrimitiveTypesMap]: P
+}[keyof PrimitiveTypesMap];
 
 /**
  * Returns a union of all the primitive properties in an object `T`.
@@ -82,6 +104,34 @@ export type Listify<T> = {
 };
 
 /**
- * All typeof types extend with date and array.
+ * Map of all values that can be returned by javascript's `typeof` operator.
+ * Extended with "date" and "array" for use with the form builder.
  */
-export type TypeOfTypes = "undefined" | "boolean" | "number" | "bigint" | "string" | "symbol" |	"function" | "object" | "date" | "array"
+export type TypeOfTypesMap = {
+    undefined: undefined,
+    boolean: boolean,
+    number: number,
+    bigint: bigint,
+    string: string,
+    symbol: symbol, 
+    function: Function, 
+    object: object,
+    date: Date,
+    array: Array<unknown>
+}
+
+/**
+ * Union of all types in the `TypeOfTypesMap`.
+ */
+export type TypeOfTypesUnion = TypeOfTypesMap[keyof TypeOfTypesMap];
+
+/**
+ * Union of all type names/keys in the `TypeOfTypesMap`.
+ */
+export type TypeOfTypes = {
+    [P in keyof TypeOfTypesMap]: P;
+}[keyof TypeOfTypesMap]
+
+export type TypeCheckFunctions = {
+    [P in keyof TypeOfTypesMap]: (val: any) => boolean;
+}

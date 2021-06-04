@@ -32,8 +32,8 @@ data: Student: {?...}
 // Sorry Albert we hebben per ongeluk de renderer interface verwijderd :(
 // Kan gebeuren, hier is 'die weer
 /** Title: This interface will create the JSX from the result of a form builder? */
-interface Renderer<T> {
-    (): Renderer<T>
-    // Add: <T>(this: Renderer, ...a: [keyof T]) => Renderer;
-    [key: string]: any
-}
+// interface Renderer {
+//     (): Renderer
+//     // Add: <T>(this: Renderer, ...a: [keyof T]) => Renderer;
+//     [key: string]: any
+// }
