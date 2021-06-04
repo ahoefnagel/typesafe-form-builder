@@ -1,4 +1,3 @@
-import { Listify } from "../utilities/helper-types";
 import { defaultEntity, Entities } from "./entities";
 import { QueryFunction, queryable } from "./queryable";
 
@@ -7,9 +6,8 @@ import { QueryFunction, queryable } from "./queryable";
  */
  interface FormBuilder<Spec> {
     readonly specification: Spec,
-    entity: <EQ extends keyof Entities, OutputObject, OutputQuerried, QF extends QueryFunction<Entities[EQ], {}, OutputObject, OutputQuerried>>
+    entity: <EQ extends keyof Omit<Entities, keyof Spec>, OutputObject, OutputQuerried, QF extends QueryFunction<Entities[EQ], {}, OutputObject, OutputQuerried>>
         (entity: EQ, q: QF) =>
-        // FormBuilder<Spec &  { [k: EQ] : ReturnType<QF>[] } >
         FormBuilder<Spec & Record<EQ, ReturnType<QF>["querried"][]>>
 }
 
@@ -26,8 +24,8 @@ const FormBuilderStep = <Spec>(specification: Spec) : FormBuilder<Spec> => ({
 
         return FormBuilderStep({
             ...specification,
-            ...{[entity]: [outputQuerried].concat(entity in specification ? (specification as any)[entity] : []) } 
-        } as Spec & Record<typeof entity, ReturnType<typeof q>["querried"][]>)
+            ...{ [entity]: [outputQuerried] } as Record<typeof entity, ReturnType<typeof q>["querried"][]>
+        })
     }
 })
 
