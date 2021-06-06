@@ -1,26 +1,19 @@
 {
-  "name": "typesafe-form-builder",
-  "version": "1.0.0",
-  "description": "",
-  "main": "./build/index.js",
-  "scripts": {
-    "postinstall": "tsc",
-    "build": "tsc",
-    "development": "tsc -w",
-    "ng-serve": "cd angular-form-builder && ng serve"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/ahoefnagel/typesafe-form-builder.git"
-  },
-  "author": "Albert Hoefnagel, Guan Hao Wu, Pedro Bronsveld, Joey Ouwens",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/ahoefnagel/typesafe-form-builder/issues"
-  },
-  "homepage": "https://github.com/ahoefnagel/typesafe-form-builder#readme",
-  "dependencies": {
-    "typescript": "^4.2.3"
-  },
-  "types": "./build/index.d.ts"
+    "name": "typesafe-form-builder-project",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/ahoefnagel/typesafe-form-builder.git"
+    },
+    "author": "Albert Hoefnagel, Guan Hao Wu, Pedro Bronsveld, Joey Ouwens",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/ahoefnagel/typesafe-form-builder/issues"
+    },
+    "homepage": "https://github.com/ahoefnagel/typesafe-form-builder#readme"
 }
