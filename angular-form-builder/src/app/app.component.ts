@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { FormBuilder } from 'angular-form-builder-lib';
 
 @Component({
     selector: 'app-root',
@@ -8,33 +9,10 @@ import { Component } from '@angular/core';
 export class AppComponent {
     title = 'angular-form-builder';
     
-    specification = {
-        word: "test",
-        student: [
-            {
-                name: "John",
-                surname: "Doe",
-                birthday: new Date(),
-                grades: [
-                    {
-                        grade: 0,
-                        courseid: 0
-                    }
-                ]
-            },
-        ],
-        course: [
-            {
-                name: "Development",
-                studypoints: 0,
-                active: true,
-                lectures: [
-                    {
-                        title: "Hello World Lecture",
-                        topic: "Printing 'Hello, world!'"
-                    }
-                ]
-            },
-        ]
-    }
+    specification = FormBuilder
+                    .entity("Student", 
+                        q => q.select("name", "surname", "birthday"))
+                    .entity("Course", 
+                        q => q.select("name", "studyPoints"));
+
 }
