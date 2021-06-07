@@ -13,6 +13,7 @@ export class AppComponent {
                     .entity("Student", 
                         q => q.select("name", "surname", "birthday"))
                     .entity("Course", 
-                        q => q.select("name", "studyPoints"));
+                        q => q.select("name", "studyPoints"))
+                    .specification;
 
 }
