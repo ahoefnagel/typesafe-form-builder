@@ -1,17 +1,15 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
-import { PrimitiveTypes } from 'typesafe-form-builder';
+import { customTypeOf, PrimitiveTypes } from 'typesafe-form-builder';
 import { primitiveNameToInputType, stringToPrimitive, InputElementTypes, isPrimitive, typeOfPrimitive } from 'typesafe-form-builder';
-
-type Value = PrimitiveTypes;
 
 @Component({
     selector: 'lib-form-primitive-input',
     templateUrl: './form-primitive-input.component.html',
     styleUrls: ['./form-primitive-input.component.scss']
 })
-export class FormPrimitiveInputComponent implements OnInit {
+export class FormPrimitiveInputComponent<Value extends PrimitiveTypes> implements OnInit {
 
-    @Input() value: Value = "";
+    @Input() value: Value = null!;
     @Output() valueChange: EventEmitter<Value> = new EventEmitter<Value>();
 
     public type: InputElementTypes = "text";
@@ -35,10 +33,10 @@ export class FormPrimitiveInputComponent implements OnInit {
     onInput(event: Event) {
         if (!event.target || !(event.target instanceof HTMLInputElement))
             return;
-        else if (this.type === "checkbox")
-            this.updateValue(event.target.checked)
+        else if (customTypeOf(this.value, "boolean"))
+            this.updateValue(event.target.checked as Value);
         else if (isPrimitive(this.value))
-            this.updateValue(stringToPrimitive(event.target.value, typeOfPrimitive(this.value)));
+            this.updateValue(stringToPrimitive(event.target.value, typeOfPrimitive(this.value)) as Value);
     }
 
     /**

@@ -1,17 +1,15 @@
 import { KeyValue } from '@angular/common';
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
-
-// type Item = PrimitiveTypes | Array<Item> | Object;
-type Item = any;
+import { customTypeOf, PrimitiveTypes, isPrimitive } from 'typesafe-form-builder';
 
 @Component({
     selector: 'lib-form-item[item]',
     templateUrl: './form-item.component.html',
     styleUrls: ['./form-item.component.scss']
 })
-export class FormItemComponent implements OnInit {
+export class FormItemComponent<Item extends PrimitiveTypes | Object> implements OnInit {
 
-    @Input() item: Item = 0;
+    @Input() item: Item = null!;
     @Output() itemChange: EventEmitter<Item> = new EventEmitter<Item>();
 
     constructor() { }
@@ -24,7 +22,7 @@ export class FormItemComponent implements OnInit {
         this.itemChange.emit(newItem);
     }
 
-    onItemPropChange(prop: any, value: Item[typeof prop]) {
+    onItemPropChange(prop: keyof Item, value: Item[typeof prop]) {
         this.item[prop] = value;
     }
 
@@ -32,16 +30,10 @@ export class FormItemComponent implements OnInit {
         return index;
     }
 
-    isPrimitive<InputType>(val: InputType): boolean {
-        return !(val instanceof Object) || val instanceof Date
-    }
+    isPrimitive = isPrimitive;
 
-    isArray<InputType>(val: InputType): boolean {
-        return val instanceof Array;
-    }
+    customTypeOf = customTypeOf;
 
-    isObject<InputType>(val: InputType): boolean {
-        return (val instanceof Object) && !(val instanceof Date) && !(val instanceof Array);
-    }
+    isArray = <ArrEllement extends Item>(val: any): val is Array<ArrEllement> => customTypeOf(val, "array");
 
 }

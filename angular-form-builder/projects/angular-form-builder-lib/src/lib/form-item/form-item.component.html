@@ -14,8 +14,10 @@
 
 <!-- item is a child object -->
 <ng-template #objectBlock>
-    <div *ngFor="let keyVal of item | keyvalue; trackBy: propTrackByFn">
-        {{keyVal.key}}:
-        <lib-form-item [item]="keyVal.value" (itemChange)="onItemPropChange(keyVal.key, $event)"></lib-form-item>
-    </div>
+    <ng-container *ngIf="customTypeOf(item, 'object')">
+        <div *ngFor="let keyVal of item | objectKeyValue; trackBy: propTrackByFn">
+            {{keyVal.key}}:
+            <lib-form-item [item]="keyVal.value" (itemChange)="onItemPropChange(keyVal.key, $event)"></lib-form-item>
+        </div>
+    </ng-container>
 </ng-template>
