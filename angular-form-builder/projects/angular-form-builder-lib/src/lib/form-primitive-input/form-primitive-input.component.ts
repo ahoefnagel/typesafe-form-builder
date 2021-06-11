@@ -9,7 +9,7 @@ import { primitiveNameToInputType, stringToPrimitive, InputElementTypes, isPrimi
 })
 export class FormPrimitiveInputComponent<Value extends PrimitiveTypes> implements OnInit {
 
-    @Input() value: Value = null!;
+    @Input() value: Value = null!; // Angular guarantees that value will have a value when the component is initialized.
     @Output() valueChange: EventEmitter<Value> = new EventEmitter<Value>();
 
     public type: InputElementTypes = "text";

@@ -9,7 +9,7 @@ import { customTypeOf, PrimitiveTypes, isPrimitive } from 'typesafe-form-builder
 })
 export class FormItemComponent<Item extends PrimitiveTypes | Object> implements OnInit {
 
-    @Input() item: Item = null!;
+    @Input() item: Item = null!; // Angular guarantees that item will have a value when the component is initialized.
     @Output() itemChange: EventEmitter<Item> = new EventEmitter<Item>();
 
     constructor() { }
