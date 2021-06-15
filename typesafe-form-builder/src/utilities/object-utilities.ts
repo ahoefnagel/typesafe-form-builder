@@ -96,3 +96,24 @@ export const typeCheckFunctions: TypeCheckFunctions = {
  */
 export const customTypeOf = <TypeName extends TypeOfTypes>(val: any, typeName: TypeName): val is TypeOfTypesMap[TypeName] =>
     typeCheckFunctions[typeName](val)
+
+/**
+ * Creates a deep copy of a given object.
+ * @param value Object or value to be copied.
+ * @returns A copy of the given object or value, without references 
+ * to the input object.
+ */
+export const deepCopy = <T>(value: T): T => {
+    if (typeof value !== "object")
+        return value;
+    const objCopy: T = { ...value }
+    if (value instanceof Array)
+        return Object.assign([], objCopy, value.map(element => deepCopy(element)));
+    else if (value instanceof Date)
+        return Object.assign(new Date(value), objCopy);
+    getKeys(value).forEach(key => {
+        if (value[key] instanceof Object)
+            objCopy[key] = deepCopy(value[key]);
+    });
+    return objCopy;
+}
