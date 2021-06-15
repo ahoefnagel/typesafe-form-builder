@@ -4,4 +4,4 @@
 
 export * from './lib/form.component';
 export * from './lib/form-builder.module';
-export { FormBuilder } from 'typesafe-form-builder';
+export { FormBuilder, deepCopy } from 'typesafe-form-builder';

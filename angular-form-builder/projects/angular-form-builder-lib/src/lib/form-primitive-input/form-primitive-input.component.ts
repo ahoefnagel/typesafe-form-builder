@@ -1,6 +1,5 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
-import { customTypeOf, PrimitiveTypes } from 'typesafe-form-builder';
-import { primitiveNameToInputType, stringToPrimitive, InputElementTypes, isPrimitive, typeOfPrimitive } from 'typesafe-form-builder';
+import { primitiveNameToInputType, stringToPrimitive, InputElementTypes, isPrimitive, typeOfPrimitive, customTypeOf, PrimitiveTypes } from 'typesafe-form-builder';
 
 @Component({
     selector: 'lib-form-primitive-input',
@@ -9,7 +8,7 @@ import { primitiveNameToInputType, stringToPrimitive, InputElementTypes, isPrimi
 })
 export class FormPrimitiveInputComponent<Value extends PrimitiveTypes> implements OnInit {
 
-    @Input() value: Value = null!; // Angular guarantees that value will have a value when the component is initialized.
+    @Input() value: Value = null!; // Angular guarantees that value will have a value when the component is initialized because of the @Input decorator.
     @Output() valueChange: EventEmitter<Value> = new EventEmitter<Value>();
 
     public type: InputElementTypes = "text";

@@ -1,6 +1,10 @@
 <h1>Form</h1>
-<lib-form [(specification)]="specification"></lib-form>
+<lib-form [(specification)]="specification" (onSubmit)="onFormSubmitted()"></lib-form>
 <h1>Specification</h1>
 <pre>
     {{specification | json}}
+</pre>
+<h1>Submitted Result</h1>
+<pre>
+    {{result | json}}
 </pre>
