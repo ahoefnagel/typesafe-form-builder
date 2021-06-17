@@ -11,9 +11,15 @@ export class FormPrimitiveInputComponent<Value extends PrimitiveTypes> implement
     @Input() value: Value = null!; // Angular guarantees that value will have a value when the component is initialized because of the @Input decorator.
     @Output() valueChange: EventEmitter<Value> = new EventEmitter<Value>();
 
+    /**
+     * Type that's givevn to the input element in the html template of this component.
+     * For example, will be `<input type="number">` if the value given to this
+     * component is of type number, and `"checkbox"` if the value is of type boolean.
+     *
+     * @type {InputElementTypes}
+     * @memberof FormPrimitiveInputComponent
+     */
     public type: InputElementTypes = "text";
-
-    constructor() { }
 
     /**
      * Runs when the component is initialized.
