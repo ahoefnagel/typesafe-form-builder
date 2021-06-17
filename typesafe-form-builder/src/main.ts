@@ -23,7 +23,7 @@ console.log("Full grades:");
 console.log(testGrades);
 
 const gradesQuerryable = queryable(testGrades);
-const quierredGrades = gradesQuerryable.child("course", q => q.select("name")).querried;
+const quierredGrades = gradesQuerryable.child("course", q => q.select("name", "active")).querried;
 console.log("Querried grades:");
 console.log(quierredGrades);
 
