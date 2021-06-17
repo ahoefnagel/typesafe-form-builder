@@ -23,6 +23,7 @@ interface Course {
     name: string;
     studyPoints: number;
     lectures: Lecture[];
+    active: boolean;
 }
 
 interface Grades {
@@ -57,6 +58,7 @@ const defaultCourse = () : Course => (
         name: "",
         studyPoints: 0,
         lectures: [],
+        active: false
     }
 )
 
