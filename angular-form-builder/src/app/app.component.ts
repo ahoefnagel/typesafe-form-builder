@@ -24,7 +24,7 @@ export class AppComponent implements OnInit {
                             )
                         )
                     .entity("Course", 
-                        q => q.select("name", "studyPoints"))
+                        q => q.select("name", "studyPoints", "active"))
                     .specification;
     
     /**
