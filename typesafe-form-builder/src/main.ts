@@ -7,6 +7,7 @@ import {renderToHtml, renderToString} from "./utilities/render-utilities";
 
 // testing queryable
 const testStudent = defaultEntity("Student");
+testStudent.name = "Not Default Name";
 testStudent.courses.push(defaultEntity("Course"));
 console.log("Full student:");
 console.log(testStudent);
@@ -26,7 +27,7 @@ const quierredGrades = gradesQuerryable.child("course", q => q.select("name")).q
 console.log("Querried grades:");
 console.log(quierredGrades);
 
-var fb = FormBuilder.entity("Student", q => q.select("name", "surname", "birthday"));
+var fb = FormBuilder.entity("Student", q => q.select("name", "surname", "birthday"), testStudent);
 var ab = fb.entity('Lecture', q => q.select("title"))
 
 console.log("Specification created object fb: ", JSON.stringify(fb));
