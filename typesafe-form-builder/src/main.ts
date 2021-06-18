@@ -2,11 +2,12 @@ import { defaultEntity } from "./core/entities";
 import { FormBuilder } from "./core/form-builder";
 import { queryable } from "./core/queryable";
 import {Renderer, RenderFunctions} from "./core/renderer";
-import {getKeys} from "./utilities/object-utilities";
+import {deepCopy, getKeys} from "./utilities/object-utilities";
 import {renderToHtml, renderToString} from "./utilities/render-utilities";
 
 // testing queryable
 const testStudent = defaultEntity("Student");
+testStudent.name = "Not Default Name";
 testStudent.courses.push(defaultEntity("Course"));
 console.log("Full student:");
 console.log(testStudent);
@@ -22,11 +23,11 @@ console.log("Full grades:");
 console.log(testGrades);
 
 const gradesQuerryable = queryable(testGrades);
-const quierredGrades = gradesQuerryable.child("course", q => q.select("name")).querried;
+const quierredGrades = gradesQuerryable.child("course", q => q.select("name", "active")).querried;
 console.log("Querried grades:");
 console.log(quierredGrades);
 
-var fb = FormBuilder.entity("Student", q => q.select("name", "surname"));
+var fb = FormBuilder.entity("Student", q => q.select("name", "surname", "birthday"), testStudent);
 var ab = fb.entity('Lecture', q => q.select("title"))
 
 console.log("Specification created object fb: ", JSON.stringify(fb));
@@ -96,3 +97,31 @@ Renderer(testObject).render(renderToString).forEach(value => console.log(value))
 
 /// TODO upon FormBuilder creation, uncomment to give access to module
 // export {FormBuilder} from "./core/form-builder";
+
+// deep copy testing
+console.log("Specification\t:", JSON.stringify(ab.specification));
+
+const specCopy = deepCopy(ab.specification);
+console.log("Specification c\t:", JSON.stringify(specCopy))
+
+console.log(ab.specification.Student.length);
+console.log(specCopy.Student.length);
+
+const externalObject = {
+  color: 'red',
+}
+
+const original = {
+  a: new Date(),
+  b: NaN,
+  c: new Function(),
+  d: undefined,
+  e: function () {},
+  f: Number,
+  g: false,
+  h: Infinity,
+  i: externalObject,
+}
+
+console.log("original\t:", original);
+console.log("copy\t:", deepCopy(original));

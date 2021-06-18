@@ -23,6 +23,7 @@ interface Course {
     name: string;
     studyPoints: number;
     lectures: Lecture[];
+    active: boolean;
 }
 
 interface Grades {
@@ -33,12 +34,6 @@ interface Grades {
 interface Lecture {
     title: string;
     topic: string;
-}
-
-// Renderer
-export interface Rendered {
-    student: Student[];
-    courses: Course[];
 }
 
 // Entity constructors
@@ -57,6 +52,7 @@ const defaultCourse = () : Course => (
         name: "",
         studyPoints: 0,
         lectures: [],
+        active: false
     }
 )
 
