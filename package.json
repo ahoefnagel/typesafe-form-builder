@@ -4,7 +4,8 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "install": "npm install --prefix ./typesafe-form-builder/ && npm install --prefix ./angular-form-builder/",
+        "install-core": "npm install --prefix ./typesafe-form-builder/"
     },
     "repository": {
         "type": "git",
