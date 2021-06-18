@@ -1,5 +1,4 @@
-import {Entities, Rendered} from "./entities";
-import {customTypeOf, extendTypeOf, getKeys} from "../utilities/object-utilities";
+import {customTypeOf, getKeys} from "../utilities/object-utilities";
 /**
  * Renderer Functions Interface
  * Callbacks are used for talking with the render function.

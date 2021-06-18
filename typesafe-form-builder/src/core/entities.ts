@@ -36,12 +36,6 @@ interface Lecture {
     topic: string;
 }
 
-// Renderer
-export interface Rendered {
-    student: Student[];
-    courses: Course[];
-}
-
 // Entity constructors
 const defaultStudent = () : Student => (
     {
