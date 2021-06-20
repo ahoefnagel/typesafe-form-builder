@@ -5,19 +5,23 @@
 
 <!-- item is an array -->
 <ng-template #arrayBlock>
-    <ul *ngIf="isArray(item); else objectBlock">
-        <li *ngFor="let arrayItem of item">
-            <lib-form-item [item]="arrayItem"></lib-form-item>
-        </li>
-    </ul>
+    <ng-container *ngIf="isArray(item); else objectBlock">
+        <br/>
+        <ul>
+            <li *ngFor="let arrayItem of item; let i = index">
+                <span *ngIf="item.length > 1" class="num">{{i+1}}</span>
+                <lib-form-item [item]="arrayItem"></lib-form-item>
+            </li>
+        </ul>
+    </ng-container>
 </ng-template>
 
 <!-- item is a child object -->
 <ng-template #objectBlock>
-    <ng-container *ngIf="customTypeOf(item, 'object')">
-        <div *ngFor="let keyVal of item | objectKeyValue; trackBy: propTrackByFn">
-            {{keyVal.key}}:
+    <div *ngIf="customTypeOf(item, 'object')" class="object">
+        <div *ngFor="let keyVal of item | objectKeyValue; trackBy: propTrackByFn" class="keyValue">
+            <label>{{keyVal.key}}</label>
             <lib-form-item [item]="keyVal.value" (itemChange)="onItemPropChange(keyVal.key, $event)"></lib-form-item>
         </div>
-    </ng-container>
+    </div>
 </ng-template>

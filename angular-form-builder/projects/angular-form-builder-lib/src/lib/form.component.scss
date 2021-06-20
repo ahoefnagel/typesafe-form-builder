@@ -1,0 +1,9 @@
+form {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    input[type="submit"] {
+        padding: 10px;
+        margin: 10px;
+    }
+}

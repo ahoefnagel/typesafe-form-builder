@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { deepCopy, FormBuilder } from 'angular-form-builder-lib';
+import { deepCopy, defaultEntity, FormBuilder } from 'angular-form-builder-lib';
 
 @Component({
     selector: 'app-root',
@@ -21,7 +21,11 @@ export class AppComponent implements OnInit {
                         q => q.select("name", "surname", "birthday")
                             .children("grades", q => q.select("grade")
                                 .child("course", q => q.select("name"))
-                            )
+                            ),
+                            {
+                                ...defaultEntity("Student"),
+                                grades: [defaultEntity("Grades"), defaultEntity("Grades")]
+                            }
                         )
                     .entity("Course", 
                         q => q.select("name", "studyPoints", "active"))
