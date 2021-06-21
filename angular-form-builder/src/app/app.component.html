@@ -1,10 +1,25 @@
-<h1>Form</h1>
-<lib-form [(specification)]="specification" (onSubmit)="onFormSubmitted()"></lib-form>
-<h1>Specification</h1>
-<pre>
-    {{specification | json}}
-</pre>
-<h1>Submitted Result</h1>
-<pre>
-    {{result | json}}
-</pre>
+<section>
+    <h1>Form</h1>
+    <lib-form [(specification)]="specification" (onSubmit)="onFormSubmitted()"></lib-form>
+</section>
+
+<section class="specification">
+    <h1>Specification</h1>
+    <p class="description">
+        This is a live view of the specification object.
+        <br/>
+        When values in the form are changed they are also updated in this object.
+    </p>
+    <pre>{{specification | json}}</pre>
+</section>
+
+<section>
+    <h1>Submitted Result</h1>
+    <p class="description">
+        These are the submitted results of the form.
+        <br/>
+        When the submit button is clicked, a deep copy of the specification is made.
+        This copy is seen here.
+    </p>
+    <pre>{{result | json}}</pre>
+</section>
