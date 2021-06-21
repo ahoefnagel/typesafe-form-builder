@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostBinding, OnInit } from '@angular/core';
 import { deepCopy, defaultEntity, FormBuilder } from 'angular-form-builder-lib';
 
 @Component({
@@ -13,6 +13,12 @@ export class AppComponent implements OnInit {
      * The specification to be rendered by the form builder Angular renderer.
      * The specification is first built using the FormBuilder's entity and select functions.
      * This demonstrates how the form builder would be used by a developer.
+     * 
+     * In this example the `entity` function is also given a default student object
+     * and two grades. This shows that a developer can provide an already existing object
+     * to the form builder, whose values can then be edited in the form.
+     * Alternatively, for `entity("Course")` no data is provided. Instead, the entity function
+     * will create a default `Course` object to be querried.
      *
      * @memberof AppComponent
      */
@@ -64,5 +70,20 @@ export class AppComponent implements OnInit {
     onFormSubmitted() {
         console.log("Form has been submitted.\nResulting data:\n", deepCopy(this.specification));
         this.result = deepCopy(this.specification);
+        this.submitted = true;
     }
+
+    /**
+     * Property used to toggle between form input and the submitted results element.
+     *
+     * @type {boolean}
+     * @memberof AppComponent
+     */
+    @HostBinding('attr.submitted') submitted: boolean = false;
+
+    /**
+     * Used to return to the form input view when the back button in the results
+     * element is pressed.
+     */
+    onBackButton = () => this.submitted = false;
 }
