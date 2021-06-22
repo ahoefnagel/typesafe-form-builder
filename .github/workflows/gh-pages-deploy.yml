@@ -3,7 +3,7 @@ on:
   push:
     branches:
       - main
-      - documentation-and-pages # TODO: remove once branch is merged.
+      - npm-commands # TODO: remove once branch is merged.
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
