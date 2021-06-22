@@ -23,6 +23,29 @@
                 <a href="./react">React</a>
             </li>
         </ul>
+        <h2>Usage</h2>
+        <p>
+            A form specification can be constructed using the FormBuilder object, 
+            and the functions entity, select, child and children.
+            The implemented type safety combined with the Typescript autocomplete
+            features in Visual Studio Code allow the developer to quickly setup
+            a form specification.
+        </p>
+        <video src="./media/form-builder-example.mp4" controls></video>
+        <p>
+            In Visual Studio Code we can now hover over the specification property
+            of the formbuilder, to see that the type of the specification has been
+            infered from the given input.
+        </p>
+        <img src="./media/form-builder-specification.png">
+        <p>
+            Finally we can give this specification object to either the Angular or 
+            React render component.
+            For Angular, the &lt;lib-form&gt; component has an input attribute
+            "specification" that takes the form builder's specification object 
+            as input.
+        </p>
+        <img src="./media/angular-form-lib-example.png">
         <h2>Made by</h2>
         <ul>
             <li>
