@@ -4,8 +4,11 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "install": "npm install --prefix ./typesafe-form-builder/ && npm install --prefix ./angular-form-builder/",
-        "install-core": "npm install --prefix ./typesafe-form-builder/"
+        "preinstall": "echo Nothing here yet",
+        "install": "((cd typesafe-form-builder) && (npm install) && (cd ..) && (cd angular-form-builder) && (npm install) && (cd ..))",
+        "postinstall": "npm run build",
+        "build": "node build.js",
+        "start": "http-server build/"
     },
     "repository": {
         "type": "git",
@@ -16,5 +19,10 @@
     "bugs": {
         "url": "https://github.com/ahoefnagel/typesafe-form-builder/issues"
     },
-    "homepage": "https://github.com/ahoefnagel/typesafe-form-builder#readme"
+    "homepage": "https://github.com/ahoefnagel/typesafe-form-builder#readme",
+    "dependencies": {
+        "fs-extra": "^10.0.0",
+        "http-server": "^0.12.3",
+        "typesafe-form-builder": "file:typesafe-form-builder"
+    }
 }
