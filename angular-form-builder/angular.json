@@ -105,6 +105,37 @@
           }
         }
       }
+    },
+    "angular-form-builder-lib": {
+      "projectType": "library",
+      "root": "projects/angular-form-builder-lib",
+      "sourceRoot": "projects/angular-form-builder-lib/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/angular-form-builder-lib/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/angular-form-builder-lib/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/angular-form-builder-lib/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/angular-form-builder-lib/src/test.ts",
+            "tsConfig": "projects/angular-form-builder-lib/tsconfig.spec.json",
+            "karmaConfig": "projects/angular-form-builder-lib/karma.conf.js"
+          }
+        }
+      }
     }
   },
   "defaultProject": "angular-form-builder"

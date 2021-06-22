@@ -1,0 +1,27 @@
+<!-- item is a primitive value -->
+<span *ngIf="isPrimitive(item); else arrayBlock">
+    <lib-form-primitive-input [value]="item" (valueChange)="onItemChange($event)"></lib-form-primitive-input>
+</span>
+
+<!-- item is an array -->
+<ng-template #arrayBlock>
+    <ng-container *ngIf="isArray(item); else objectBlock">
+        <br/>
+        <ul>
+            <li *ngFor="let arrayItem of item; let i = index">
+                <span *ngIf="item.length > 1" class="num">{{i+1}}</span>
+                <lib-form-item [item]="arrayItem"></lib-form-item>
+            </li>
+        </ul>
+    </ng-container>
+</ng-template>
+
+<!-- item is a child object -->
+<ng-template #objectBlock>
+    <div *ngIf="customTypeOf(item, 'object')" class="object">
+        <div *ngFor="let keyVal of item | objectKeyValue; trackBy: propTrackByFn" class="keyValue">
+            <label>{{keyVal.key}}</label>
+            <lib-form-item [item]="keyVal.value" (itemChange)="onItemPropChange(keyVal.key, $event)"></lib-form-item>
+        </div>
+    </div>
+</ng-template>
