@@ -1,0 +1,12 @@
+body {
+    margin: 40px auto;
+    max-width: 800px;
+    line-height: 1.6;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #212121;
+    padding: 0 10px;
+}
+
+img {
+    max-width: 100%;
+}
