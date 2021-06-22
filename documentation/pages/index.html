@@ -1,8 +1,70 @@
 <!DOCTYPE html>
 <html>
+    <head>
+        <link rel="stylesheet" href="styles.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Typesafe Form Builder</title>
+    </head>
     <body>
         <h1>Typesafe Form Builder</h1>
-        <a href="./angular">Angular</a>
-        <a href="./react">React</a>
+        <p>
+            This is the hand-in for the 
+            <a href="https://github.com/hogeschool/Software-Engineering-Minor/blob/master/Projects/project3%20-%20typesafe%20form%20builder.md">typesafe form builder assignment</a>
+            of the software engineering minor at Hogeschool Rotterdam.
+            There are two renderers for this form builder. One using Angular, and one using React.
+            With the links below you can see these two renderers in action.
+        </p>
+        <h2>Live Demos</h2>
+        <ul>
+            <li>
+                <a href="./angular">Angular</a>
+            </li>
+            <li>
+                <a href="./react">React</a>
+            </li>
+        </ul>
+        <h2>Made by</h2>
+        <ul>
+            <li>
+                <a href="https://github.com/Pedro-Bronsveld">Pedro Bronsveld</a>
+            </li>
+            <li>
+                <a href="https://github.com/JoeyOuwens">Joey Ouwens</a>
+            </li>
+            <li>
+                <a href="https://github.com/ahoefnagel">Albert Hoefnagel</a>
+            </li>
+            <li>
+                <a href="https://github.com/guanhaowu">Guan Hao Wu</a>
+            </li>
+        </ul>
+        <p>
+            (Team 14 within the software engineering minor.)
+        </p>
+        <h2>Source</h2>
+        <p>
+            <a href="https://github.com/ahoefnagel/typesafe-form-builder">
+                <img src="./media/GitHub-Mark-32px.png">
+                View the repository on GitHub.
+            </a>
+        </p>
+        <h2>Project Structure</h2>
+        <p>
+            The project consists of three packages.
+            Each contained in a folder in the root of the repository.
+            First, the <b>typesafe-form-builder</b> package, which contains all
+            functions and interfaces needed to build a form specification
+            in a type safe way.
+        </p>
+        <p>
+            The type-safe-formbuilder package is used as a dependency by the
+            <b>angular-form-builder</b> and <b>react-form-builder</b> packages.
+            Both of these contain components to render the specification, and
+            handle user input.
+        </p>
+        <h3>Diagram</h3>
+        <a href="./media/form-builder-diagram.svg">
+            <img src="./media/form-builder-diagram.svg">
+        </a>
     </body>
 </html>
