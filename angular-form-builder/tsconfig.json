@@ -2,6 +2,12 @@
 {
     "compileOnSave": false,
     "compilerOptions": {
+      "paths": {
+        "angular-form-builder-lib": [
+          "dist/angular-form-builder-lib/angular-form-builder-lib",
+          "dist/angular-form-builder-lib"
+        ]
+      },
         "baseUrl": "./",
         "outDir": "./dist/out-tsc",
         "forceConsistentCasingInFileNames": true,

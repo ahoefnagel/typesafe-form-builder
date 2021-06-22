@@ -1,22 +1,25 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
-import { PrimitiveTypes } from 'typesafe-form-builder';
-import { primitiveNameToInputType, stringToPrimitive, InputElementTypes, isPrimitive, typeOfPrimitive } from 'typesafe-form-builder';
-
-type Value = PrimitiveTypes;
+import { primitiveNameToInputType, stringToPrimitive, InputElementTypes, isPrimitive, typeOfPrimitive, customTypeOf, PrimitiveTypes } from 'typesafe-form-builder';
 
 @Component({
-    selector: 'app-form-primitive-input',
+    selector: 'lib-form-primitive-input',
     templateUrl: './form-primitive-input.component.html',
     styleUrls: ['./form-primitive-input.component.scss']
 })
-export class FormPrimitiveInputComponent implements OnInit {
+export class FormPrimitiveInputComponent<Value extends PrimitiveTypes> implements OnInit {
 
-    @Input() value: Value = "";
+    @Input() value: Value = null!; // Angular guarantees that value will have a value when the component is initialized because of the @Input decorator.
     @Output() valueChange: EventEmitter<Value> = new EventEmitter<Value>();
 
+    /**
+     * Type that's givevn to the input element in the html template of this component.
+     * For example, will be `<input type="number">` if the value given to this
+     * component is of type number, and `"checkbox"` if the value is of type boolean.
+     *
+     * @type {InputElementTypes}
+     * @memberof FormPrimitiveInputComponent
+     */
     public type: InputElementTypes = "text";
-
-    constructor() { }
 
     /**
      * Runs when the component is initialized.
@@ -35,10 +38,10 @@ export class FormPrimitiveInputComponent implements OnInit {
     onInput(event: Event) {
         if (!event.target || !(event.target instanceof HTMLInputElement))
             return;
-        else if (this.type === "checkbox")
-            this.updateValue(event.target.checked)
+        else if (customTypeOf(this.value, "boolean"))
+            this.updateValue(event.target.checked as Value);
         else if (isPrimitive(this.value))
-            this.updateValue(stringToPrimitive(event.target.value, typeOfPrimitive(this.value)));
+            this.updateValue(stringToPrimitive(event.target.value, typeOfPrimitive(this.value)) as Value);
     }
 
     /**
