@@ -2,10 +2,11 @@
 Building forms with complete typesafety. 
 
 ## Quick start
-Live Demo: https://ahoefnagel.github.io/typesafe-form-builder/  
+Live Demo: https://ahoefnagel.github.io/typesafe-form-builder/.  
 Run the following commands to get started.  
-`npm install`  
-`npm start`  
+`npm install`.  
+`npm start`.  
+ [example.ts file](./typesafe-form-builder/src/example.ts) with a bit of implementation and the usage of the library.    
 Below is stated some more information about the structure of the project. 
 
 ## Initializing the project
@@ -27,3 +28,9 @@ For react you can directly navigate to  http://127.0.0.1:8080/react/
 
 ## Additional information 
 A live demo can be found at https://ahoefnagel.github.io/typesafe-form-builder/ with some more information on the usage of the library. 
+
+### Example
+There is a bit of sample code that has been written for the usage of the library, this can be found [in the example.ts file](./typesafe-form-builder/src/example.ts).  
+There also is a script command to see what the structure of a specification built with the library is and how it is represented.  
+This can also be seen in the comments of the file itself. 
+The command to view the result of the code in the example file is `npm run example`. This command can be ran from the root folder or the `./typesafe-form-builder/` folder.
