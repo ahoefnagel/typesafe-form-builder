@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import './form.scss';
 import { deepCopy } from "typesafe-form-builder";
 import { FormItem } from "./form-item";
 

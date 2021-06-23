@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import './App.css';
+import './App.scss';
 import { Form } from './form/form';
 import { defaultEntity, FormBuilder } from 'typesafe-form-builder';
 
@@ -23,15 +23,23 @@ function App() {
     );
 
     const [result, setResult] = useState(specification);
+    
+    const [submitted, setSubmitted] = useState(false);
 
     const onSpecificationChange = (newSpecification: typeof specification) => {
         setSpecification({...newSpecification});
     }
     
-    const onFormSubmitted = (newSpecification: typeof specification) => setResult(newSpecification);
+    const onFormSubmitted = (newSpecification: typeof specification) => {
+        console.log("su")
+        setResult(newSpecification);
+        setSubmitted(true);
+    }
+
+    const onBackButton = () => setSubmitted(false);
 
     return (
-        <>
+        <div id="form-builder-example" data-submitted={submitted}>
             <section className="main">
                 <h1>Form</h1>
                 <Form 
@@ -61,7 +69,27 @@ function App() {
                 </p>
                 <pre>{JSON.stringify(result, null, 2)}</pre>
             </section>
-        </>
+
+            <section className="result">
+                <h1>Form Submitted!</h1>
+                <p>
+                    These are the submitted results of the form.
+                    <br/><br/>
+                    When the submit button is clicked, a deep copy of the specification is made.
+                    <br/>
+                    This copy is seen here.
+                    <br/><br/>
+                    A developer using the form builder can choose how to handle these results.
+                    <br/>
+                    For example, sending them to a back-end endpoint.
+                    <br/>
+                    Right now, the results are simply displayed here.
+                </p>
+                <h3>Submitted Form Data</h3>
+                <pre>{JSON.stringify(result, null, 2)}</pre>
+                <input type="button" value="Back" onClick={onBackButton}></input>
+            </section>
+        </div>
     );
 }
 

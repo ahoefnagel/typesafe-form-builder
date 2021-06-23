@@ -1,4 +1,5 @@
 import { useState } from "react";
+import './form-item.scss';
 import { deepCopy, getKeys, isPrimitive, PrimitiveTypes } from "typesafe-form-builder";
 import { FormPrimitiveInput } from "./form-primitive-input";
 
@@ -47,16 +48,19 @@ export function FormItem <Item extends PrimitiveTypes | Object>(props: FormItemP
     if (isPrimitive(item))
         return <FormPrimitiveInput value={item} onValueChange={onItemChange} />
     else if (item instanceof Array)
-        return <ul>
+        return <>
+        <br/>
+        <ul className="array">
             {item.map((arrayItem, i) => <li key={i}>
                 {item.length > 1 ? <span className="num">{i+1}</span> : null}
                 <FormItem item={arrayItem} onItemChange={newArrayItem => onArrayElementChange(item, i, newArrayItem)} />
             </li>)}
         </ul>
+        </>
     else if (item instanceof Object)
-        return <div>
+        return <div className="object">
             {getKeys(item).map(key => 
-            <div key={String(key)}>
+            <div key={String(key)} className="keyValue">
                 <label>{key}</label>
                 <FormItem item={item[key]} onItemChange={(newItem) => onItemPropChange(item, key, newItem)}/>
             </div>)}
