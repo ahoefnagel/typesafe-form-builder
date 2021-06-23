@@ -22,7 +22,6 @@
     "homepage": "https://github.com/ahoefnagel/typesafe-form-builder#readme",
     "dependencies": {
         "fs-extra": "^10.0.0",
-        "http-server": "^0.12.3",
-        "typesafe-form-builder": "file:typesafe-form-builder"
+        "http-server": "^0.12.3"
     }
 }
