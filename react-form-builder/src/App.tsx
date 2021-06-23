@@ -6,7 +6,7 @@ import { defaultEntity, FormBuilder } from 'typesafe-form-builder';
 function App() {
 
     /**
-     * The specification to be rendered by the form builder Angular renderer.
+     * The specification to be rendered by the form builder React renderer.
      * The specification is first built using the FormBuilder's entity and select functions.
      * This demonstrates how the form builder would be used by a developer.
      * 
