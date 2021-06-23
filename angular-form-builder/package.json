@@ -4,6 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "concurrently \"ng serve --host 0.0.0.0\" \"ng build angular-form-builder-lib --watch \" --names \"main,library\" --prefix-colors \"green,blue\"",
+    "postinstall": "npm run build",
     "build": "ng build angular-form-builder-lib && ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
