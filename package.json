@@ -4,8 +4,7 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "preinstall": "echo Nothing here yet",
-        "install": "(cd typesafe-form-builder && npm install && cd ..) && (cd angular-form-builder && npm install && cd ..)",
+        "install": "(cd typesafe-form-builder && npm install && cd ..) && (cd angular-form-builder && npm install && cd ..) && (cd react-form-builder && npm install && cd ..)",
         "postinstall": "npm run build",
         "build": "node build.js",
         "example": "(cd typesafe-form-builder && npm run example)",

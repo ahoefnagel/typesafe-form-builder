@@ -13,7 +13,8 @@ Below is stated some more information about the structure of the project.
 The initialization of the three sub-projects that are used to create the form builder are quite straight forward.  
 Just as you normally would, you use `npm install` to install all the required packages.  
 But this can be done in the root folder of the project.  
-The install script has been changed by installing the packages that are required for each sub-project. 
+The install script has been changed by installing the packages that are required for each sub-project.
+The install procedure has been tested with npm 7.18.1. Older versions may throw some unexpected errors.
 
 ## Building the project
 After the packages of a sub-project have been downloaded, the `postinstall` script will be ran on all the sub-projects.  
