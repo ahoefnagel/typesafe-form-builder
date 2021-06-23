@@ -13,7 +13,6 @@ jobs:
 
       - name: Install and Build 🔨
         run: |
-          echo "Install and Build skipped until merge."
           npm install
           npm run build
 
