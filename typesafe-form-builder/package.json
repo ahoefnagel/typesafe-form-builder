@@ -6,7 +6,8 @@
   "scripts": {
     "postinstall": "tsc",
     "build": "tsc",
-    "development": "tsc -w"
+    "development": "tsc -w",
+    "example": "tsc && node ./build/example.js"
   },
   "repository": {
     "type": "git",
