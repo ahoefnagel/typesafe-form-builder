@@ -11,3 +11,5 @@ After the packages of a sub-project have been downloaded, the `postinstall` scri
 ## Running a local instance
 For the developing or expanding of this project there is a way to run all of the code on a testing server, since all code is client sided. By running `npm start` in the root folder a `http-server` will be started with the `build` folder as the root directory of the local server. 
 
+## Additional information 
+A live demo can be found at https://ahoefnagel.github.io/typesafe-form-builder/ with some more information on the usage of the library. 
