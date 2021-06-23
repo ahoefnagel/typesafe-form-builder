@@ -8,6 +8,7 @@
         "install": "(cd typesafe-form-builder && npm install && cd ..) && (cd angular-form-builder && npm install && cd ..)",
         "postinstall": "npm run build",
         "build": "node build.js",
+        "example": "(cd typesafe-form-builder && npm run example)",
         "start": "http-server build/"
     },
     "repository": {
