@@ -9,6 +9,11 @@ type FormItemProps<Item extends PrimitiveTypes | Object> = {
 }
 
 export function FormItem <Item extends PrimitiveTypes | Object>(props: FormItemProps<Item>) {
+
+    /**
+     * An item can be any nested object or primitive property in the
+     * specification object.
+     */
     const [item, setItem] = useState(props.item);
 
     /**

@@ -8,6 +8,12 @@ type FormPrimitiveInputProps<Value extends PrimitiveTypes> = {
 
 export function FormPrimitiveInput <Value extends PrimitiveTypes>(props: FormPrimitiveInputProps<Value>) {
 
+    /**
+     * The value state variable contains a primitive value that's
+     * contained in the specification object.
+     * For each of these primitive types an html input element
+     * can be created, and input can be saved into this variable.
+     */
     const [value, setValue] = useState(props.value);
     
     /**

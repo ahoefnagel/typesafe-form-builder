@@ -11,14 +11,28 @@ type FormProps<Spec extends Object> = {
 
 export function Form <Spec extends Object>(props: FormProps<Spec>) {
 
+    /**
+     * Specification state is created from the specification given through
+     * this component's props.
+     */
     const [specification, setSpecification] = useState(props.specification);
 
+    /**
+     * Called when the data in the specification is modified.
+     * @param newSpecification new specification object with updated data.
+     */
     const onSpecificationChange = (newSpecification: Spec) => {
         const specificationCopy = {...newSpecification};
         props.onSpecificationChange(specificationCopy);
         setSpecification(specificationCopy);
     }
 
+    /**
+     * This is the callback for the submit button of the form.
+     * It gives the current specification to whatever parent component 
+     * is using this form component.
+     * @param event 
+     */
     const onSubmitClicked = (event: React.FormEvent) => {
         event.preventDefault();
         props.onSubmit(deepCopy({...specification}));
