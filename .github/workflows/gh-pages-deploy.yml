@@ -1,0 +1,29 @@
+name: GitHub Pages - Build and Deploy
+on:
+  push:
+    branches:
+      - main
+      - npm-commands # TODO: remove once branch is merged.
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v2.3.4
+
+      - name: Install and Build 🔨
+        run: echo "Install and Build skipped until merge." # TODO: uncomment build commands
+        # npm install
+        # npm run build
+      
+      # TODO: remove once build process is setup.
+      - name: Mock Build # Temporaryily mock contents of build folder until the build scripts are finished.
+        run: |
+          mkdir build
+          cp -r documentation/pages/* build/
+
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@4.1.4
+        with:
+          branch: gh-pages # The branch the action should deploy to.
+          folder: build # The folder whose contents will be deployed to the root of the gh-pages branch.
